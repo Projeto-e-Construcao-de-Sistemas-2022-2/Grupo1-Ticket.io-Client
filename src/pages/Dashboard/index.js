@@ -30,17 +30,17 @@ function Dashboard() {
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
         <h1 className="h2">Dashboard</h1>
       </div>
-      <canvas className="my-4 w-100" id="myChart" width="900" height="380"></canvas>
       <p>~~~~Teste api request~~~~</p>
       <p>~~~~Localização {location && <>ativada</>}{!location && <>desativada</>}~~~~</p>
       <p>~~~~Cidade: {weather && <>{weather['name']}</>}~~~~</p>
       <p>~~~~Temperatura: {weather && <>{weather['main']['temp']}</>}°C~~~~</p>
       <p>exibir algum gráfico ?</p>
+      <p>exibir TPs com mais de 30 dias sem atualização das atividades</p>
       <p>+Ticket (pra quem é do time qualidade)</p>
       <p>+Grupo solucionador (apenas pra quem é do time de gestores ?)</p>
       <p>Lista problemas</p>
       <p>Lista soluções</p>
-      <p>exibir TPs com mais de 30 dias sem atualização das atividades</p>
+      
       
     </>
   )

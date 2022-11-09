@@ -23,14 +23,6 @@ import UpdateSolution from './pages/solutions/Update'
 
 function App() {
 
-  /* teste | trocar arquivo CSS pra dark/light mode */
-  const style = document.getElementById('style');
-  if (false) {
-    style.href = 'https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.2/darkly/bootstrap.min.css'
-  } else {
-    style.href = 'https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.2/sandstone/bootstrap.min.css'
-  }
-
   return (
     <>
       <Navbar />
