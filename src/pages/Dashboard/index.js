@@ -38,9 +38,10 @@ function Dashboard() {
       <p>exibir TPs com mais de 30 dias sem atualização das atividades</p>
       <p>+Ticket (pra quem é do time qualidade)</p>
       <p>+Grupo solucionador (apenas pra quem é do time de gestores ?)</p>
+      <p>Lista grupos solucionadores</p>
       <p>Lista problemas</p>
       <p>Lista soluções</p>
-      
+      <a target="_blank" href="https://gitlab.com/jrmsrs/ticket.io-front">Codigo fonte</a>
       
     </>
   )
