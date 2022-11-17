@@ -1,96 +1,109 @@
+import { useState, useEffect } from 'react'
+import DataTable from 'react-data-table-component'
+import DataTableExtensions from "react-data-table-component-extensions"
+import 'react-data-table-component-extensions/dist/index.css'
+import axios from 'axios';
 import './styles.css'
+import { useNavigate } from 'react-router-dom';
 
 function Issues() {
+  const [data, setData] = useState([])
+  const [pending, setPending] = useState([])
+  const navigate = useNavigate();
+
+  let getData = async () => {
+    let res = await axios.get('https://randomuser.me/api/?results=50')
+    setData(res.data.results)
+    setPending(false)
+  }
+
+  useEffect(()=>{
+    getData()
+  }, [])
+
+  const columns = [
+    {
+      id: 'firstname',
+      name: 'Name',
+      selector: row => row.name.first,
+      sortable: true,
+    },
+    {
+      id: 'lastname',
+      name: 'Last name',
+      selector: row => row.name.last,
+      sortable: true,
+    },
+    {
+      id: 'gender',
+      name: 'Gender',
+      selector: row => row.gender,
+      sortable: true,
+    },
+    {
+      id: 'country',
+      name: 'Country',
+      selector: row => row.location.country,
+      sortable: true,
+    },
+    {
+      id: 'state',
+      name: 'State',
+      selector: row => row.location.state,
+      sortable: true,
+    },
+    {
+      id: 'borndate',
+      name: 'Born date',
+      selector: row => row.dob.date,
+      sortable: true,
+    },
+    {
+      id: 'email',
+      name: 'E-mail',
+      selector: row => row.email,
+      sortable: true,
+    }
+  ];
+  
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
         <h1 className="h2">Lista de problemas</h1>
       </div>
+      <p>documentação: https://react-data-table-component.netlify.app/</p>
+      <p>api: https://randomuser.me/api/?results=50</p>
       <div className="table-responsive">
-        <table className="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Ticket nº</th>
-              <th scope="col">Grupo atribuído</th>
-              <th scope="col">Encerrado</th>
-              <th scope="col">Prev. de conclusão</th>
-              <th scope="col">Data de conclusão</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><a className="link" href="#">1,001</a></td>
-              <td>XXXX XXXX</td>
-              <td>encerrado</td>
-              <td>2022-11-08</td>
-              <td>2022-11-08</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,002</a></td>
-              <td>XXXX XXXX</td>
-              <td>em aberto</td>
-              <td>2022-11-08</td>
-              <td>---</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,003</a></td>
-              <td>YYYY YYYY</td>
-              <td>em aberto</td>
-              <td>2022-11-08</td>
-              <td>---</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,004</a></td>
-              <td>XXXX XXXX</td>
-              <td>em aberto</td>
-              <td>2022-11-08</td>
-              <td>---</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,005</a></td>
-              <td>ZZZZ ZZZZ</td>
-              <td>em aberto</td>
-              <td>2022-11-08</td>
-              <td>---</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,006</a></td>
-              <td>YYYY YYYY</td>
-              <td>em aberto</td>
-              <td>2022-11-08</td>
-              <td>---</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,007</a></td>
-              <td>YYYY YYYY</td>
-              <td>em aberto</td>
-              <td>2022-11-08</td>
-              <td>---</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,008</a></td>
-              <td>WWW WWW</td>
-              <td>encerrado</td>
-              <td>2022-11-08</td>
-              <td>2022-11-08</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,009</a></td>
-              <td>XXXX XXXX</td>
-              <td>em aberto</td>
-              <td>2022-11-08</td>
-              <td>---</td>
-            </tr>
-            <tr>
-              <td><a className="link" href="#">1,010</a></td>
-              <td>ZZZZ ZZZZ</td>
-              <td>em aberto</td>
-              <td>2022-11-08</td>
-              <td>---</td>
-            </tr>
-          </tbody>
-        </table>
+        <DataTableExtensions {...{columns,data}}>
+          {localStorage.getItem("dark")!=="true" ? <DataTable
+            columns={columns}
+            data={data}
+            keyField={'email'}
+            onRowClicked={data => {
+              return navigate("/issues/"+data.login.uuid)
+            }}
+            pointerOnHover
+            pagination
+            defaultSortFieldId={1}
+            highlightOnHover
+            progressPending={pending}
+          /> :
+          <DataTable
+            columns={columns}
+            data={data}
+            theme="dark"
+            onRowClicked={data => {
+              return navigate("/issues/"+data.login.uuid)
+            }}
+            pointerOnHover
+            pagination
+            defaultSortFieldId={1}
+            highlightOnHover
+            progressPending={pending}
+          />}
+        </DataTableExtensions>
       </div>
+      <p>problema: não dá pra filtrar por data <img width={35} src="https://i.kym-cdn.com/photos/images/newsfeed/002/369/918/dee.gif" alt="" /></p>
     </>
   )
 }

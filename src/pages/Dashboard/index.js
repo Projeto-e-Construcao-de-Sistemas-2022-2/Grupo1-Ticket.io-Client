@@ -5,11 +5,11 @@ function Dashboard() {
   const [location, setLocation] = useState(false)
   const [weather, setWeather] = useState(false)
 
-  let getWeather = async (lat, long) => {
+  let getWeather = async (lat, lon) => {
     let res = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
       params: {
         lat: lat,
-        lon: long,
+        lon: lon,
         appid: process.env.REACT_APP_OPEN_WEATHER_KEY,
         lang: 'pt',
         units: 'metric'
@@ -36,8 +36,8 @@ function Dashboard() {
       <p>~~~~Temperatura: {weather && <>{weather['main']['temp']}</>}°C~~~~</p>
       <p>exibir algum gráfico ?</p>
       <p>exibir TPs com mais de 30 dias sem atualização das atividades</p>
-      <p>+Ticket (pra quem é do time qualidade)</p>
       <p>+Grupo solucionador (apenas pra quem é do time de gestores ?)</p>
+      <p>+Ticket (pra quem é do time qualidade)</p>
       <p>Lista grupos solucionadores</p>
       <p>Lista problemas</p>
       <p>Lista soluções</p>
