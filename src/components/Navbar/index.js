@@ -27,9 +27,10 @@ function Navbar() {
             <span>{signedUser? signedUser.displayName : "Não autenticado"}</span>
             {signedUser ? <IUser className='user mx-2' /> : <IUserX className='user mx-2' />}
           </div>
-          {user && <Link to="login" onClick={() => signOut()} className="nav-link px-2"><ILogOut /></Link>}
+          {user && <Link to="login" data-bs-toggle="modal" data-bs-target="#exampleModal" className="nav-link px-2"><ILogOut /></Link>}
         </div>
       </div>
+
     </header>
   )
 }

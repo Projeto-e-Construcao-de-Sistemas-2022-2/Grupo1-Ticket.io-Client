@@ -71,8 +71,6 @@ function Issues() {
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
         <h1 className="h2">Lista de problemas</h1>
       </div>
-      <p>documentação: https://react-data-table-component.netlify.app/</p>
-      <p>api: https://randomuser.me/api/?results=50</p>
       <div className="table-responsive">
         <DataTableExtensions {...{columns,data}}>
           {localStorage.getItem("dark")!=="true" ? <DataTable
@@ -103,7 +101,8 @@ function Issues() {
           />}
         </DataTableExtensions>
       </div>
-      <p>problema: não dá pra filtrar por data <img width={35} src="https://i.kym-cdn.com/photos/images/newsfeed/002/369/918/dee.gif" alt="" /></p>
+      <p>documentação: https://react-data-table-component.netlify.app/</p>
+      <p>api: https://randomuser.me/api/?results=50</p>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {Routes, Route} from 'react-router-dom'
 import { AuthGoogleProvider } from './contexts/authGoogle'
 import { PrivateRoutes } from './components/PrivateRoutes'
@@ -25,7 +25,6 @@ import UpdateSolution from './pages/solutions/Update'
 import Login from './pages/Login'
 
 function App() {
-
   return (
     <>
       <AuthGoogleProvider>
@@ -54,7 +53,9 @@ function App() {
             <Route path="login" element={<Login />} />
           </Routes>
         </MainContainer>
+        
       </AuthGoogleProvider>
+      
     </>
   )
 }
