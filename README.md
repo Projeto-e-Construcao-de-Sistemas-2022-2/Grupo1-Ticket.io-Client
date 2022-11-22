@@ -1,7 +1,7 @@
 # Ticket.io (cliente)
 
 <img src="logo-light.png#gh-light-mode-only" alt="logo" style="width:100%">
-<img src="logo-dark.png#gh-light-mode-only" alt="logo" style="width:100%">
+<img src="logo-dark.png#gh-dark-mode-only" alt="logo" style="width:100%">
 
 Aplicação web com soluções de gerenciamento de problemas voltados para desenvolvedores divididos em grupos solucionadores
 
