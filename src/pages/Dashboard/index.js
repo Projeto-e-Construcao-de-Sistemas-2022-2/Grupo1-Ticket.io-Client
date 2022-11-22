@@ -15,7 +15,7 @@ function Dashboard() {
       <p>Lista problemas</p>
       <p>Lista soluções</p>
       <p>Relatório de envios</p>
-      <a target="_blank" href="https://gitlab.com/jrmsrs/ticket.io-front">Codigo fonte</a>
+      <a target="_blank" href="https://gitlab.com/jrmsrs/ticket.io-front/tree/dev">Codigo fonte</a>
       
     </>
   )

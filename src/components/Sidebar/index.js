@@ -1,20 +1,15 @@
 import { NavLink } from "react-router-dom"
-import { useMediaQuery } from 'react-responsive'
-import ReactTooltip from 'react-tooltip' 
 import { useEffect, useState } from "react"
-import { 
-  Home as IHome, 
-  Plus as IPlus, 
-  List as IList, 
-  Sliders as ISliders, 
-} from "react-feather"
-import { useContext } from "react";
-import { AuthGoogleContext } from "../../contexts/authGoogle";
+import { Home as IHome, Plus as IPlus, List as IList, Sliders as ISliders } from "react-feather"
+import { useContext } from "react"
+import { AuthGoogleContext } from "../../contexts/authGoogle"
+import { useMediaQuery } from 'react-responsive'
 
 function Sidebar() {
+  const [theme, setTheme] = useState('');
+  const [mdExpanded, setMdExpanded] = useState(false)
   const tabletBreakpointMin = useMediaQuery({ query: '(min-width: 992px)' })
   const tabletBreakpointMax = useMediaQuery({ query: '(max-width: 576px)' })
-  const [theme, setTheme] = useState('');
   const themes = [
     {value: "", text: "Selecionar tema"},
     {value: "cerulean", text: "Cerulean"},
@@ -44,7 +39,7 @@ function Sidebar() {
     {value: "zephyr", text: "Zephyr"},
   ];
 
-  const { user, signOut } = useContext(AuthGoogleContext);
+  const { user } = useContext(AuthGoogleContext);
 
   useEffect(()=>{
     const style = document.getElementById('style');
@@ -60,61 +55,67 @@ function Sidebar() {
 
   const handleThemeChange = event => {
     setTheme(event.target.value);
-  };
-  
+  }
+  function handleMdExpand(bool) {
+    const isOnMdBreakpoint = !(tabletBreakpointMax || tabletBreakpointMin)
+    if (isOnMdBreakpoint){
+      setMdExpanded(bool)
+    }
+  }
+
   return (
-    user && <nav id="sidebarMenu" className="col-sm-1 col-lg-2 d-sm-block bg-primary sidebar collapse">
+    user && <nav id="sidebarMenu" className={"d-sm-block bg-primary sidebar collapse col-lg-2" + (mdExpanded ? " col-sm-5 col-md-3" : " col-sm-1")} onMouseEnter={()=>handleMdExpand(true)} onMouseLeave={()=>handleMdExpand(false)}>
       <div className="position-sticky pt-1 sidebar-sticky">
         <ul className="nav flex-column">
-          <li className="nav-item mx-sm-auto mt-3 mb-1 mx-0 mx-lg-0">
+          <li className={"mt-3 nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <NavLink to="/" end className="feather-props nav-link" data-tip="Dashboard">
               <IHome />
-              <span className="px-2 d-sm-inline d-sm-none d-lg-inline">Dashboard</span>
+              <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Dashboard</span>
             </NavLink>
           </li>
-          <li className="nav-item mx-sm-auto my-1 mx-0 mx-lg-0">
+          <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <NavLink to="groups/new" end className="feather-props nav-link" data-tip="Cadastrar grupo solucionador">
             <IPlus />
-              <span className="px-2 d-sm-inline d-sm-none d-lg-inline">Grupo solucionador</span>
+              <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Grupo solucionador</span>
             </NavLink>
           </li>
-          <li className="nav-item mx-sm-auto my-1 mx-0 mx-lg-0">
+          <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <NavLink to="issues/new" end className="feather-props nav-link" data-tip="Cadastrar ticket de problema">
               <IPlus />
-              <span className="px-2 d-sm-inline d-sm-none d-lg-inline">Ticket de problema</span>
+              <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Ticket de problema</span>
             </NavLink>
           </li>
-          <li className="nav-item mx-sm-auto my-1 mx-0 mx-lg-0">
+          <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <NavLink to="groups" end className="feather-props nav-link" data-tip="Visualizar grupos solucionadores">
               <IList />
-              <span className="px-2 d-sm-inline d-sm-none d-lg-inline">Grupos solucionadores</span>
+              <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Grupos solucionadores</span>
             </NavLink>
           </li>
-          <li className="nav-item mx-sm-auto my-1 mx-0 mx-lg-0">
+          <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <NavLink to="issues" end className="feather-props nav-link" data-tip="Visualizar problemas">
               <IList />
-              <span className="px-2 d-sm-inline d-sm-none d-lg-inline">Problemas</span>
+              <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Problemas</span>
             </NavLink>
           </li>
-          <li className="nav-item mx-sm-auto my-1 mx-0 mx-lg-0">
+          <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <NavLink to="solutions" end className="feather-props nav-link" data-tip="Visualizar soluções anteriores">
               <IList />
-              <span className="px-2 d-sm-inline d-sm-none d-lg-inline">Soluções anteriores</span>
+              <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Soluções anteriores</span>
             </NavLink>
           </li>
         </ul>
 
         <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase"></h6>
         <ul className="nav flex-column mb-2">
-          <li className="nav-item mx-sm-auto my-1 mx-0 mx-lg-0">
+          <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <NavLink to="settings" end className="feather-props nav-link" data-tip="Configurações">
               <ISliders />
-              <span className="px-2 d-sm-inline d-sm-none d-lg-inline">Configurações</span>
+              <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Configurações</span>
             </NavLink>
           </li>
         </ul>
         <ul className="nav flex-column mb-2">
-          <li className="nav-item mx-sm-auto my-1 mx-0 px-2 mx-lg-0 d-sm-inline d-sm-none d-lg-inline">
+          <li className={"nav-item my-1 mx-0 px-2 mx-lg-0 d-sm-inline"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <select className="form-select" aria-label="Theme select" value={theme} onChange={handleThemeChange}>
               {themes.map(option => (
                 <option key={option.value} value={option.value}>
@@ -125,7 +126,6 @@ function Sidebar() {
           </li>
         </ul>
       </div>
-      <ReactTooltip place="right" effect="solid" type="info" disable={tabletBreakpointMax || tabletBreakpointMin} />
     </nav>
   )
 }
