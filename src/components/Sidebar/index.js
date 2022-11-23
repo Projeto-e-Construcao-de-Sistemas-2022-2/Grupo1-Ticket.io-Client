@@ -50,7 +50,7 @@ function Sidebar() {
       localStorage.setItem('dark', (t==='darkly' || t==='vapor' || t==='solar' || t==='slate' || t==='cyborg') ? 'true' : 'false')
     }
     /* se não houver o item theme no localStorage (usuario não setou tema): o default é 'sandstone' */
-    style.href = 'https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.2/'+( (localStorage.getItem('theme')!==null) ? localStorage.getItem('theme') : 'sandstone' )+'/bootstrap.min.css'
+    style.href = 'https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.2/'+( (localStorage.getItem('theme')!==null) ? localStorage.getItem('theme') : 'lux' )+'/bootstrap.min.css'
   }, [theme]) /* função chamada toda vez que theme sofrer alteração e quando abre o app */
 
   const handleThemeChange = event => {

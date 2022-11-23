@@ -1,5 +1,5 @@
 import React from 'react'
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { AuthGoogleProvider } from './contexts/authGoogle'
 import { PrivateRoutes } from './components/PrivateRoutes'
 
