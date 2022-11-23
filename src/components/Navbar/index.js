@@ -2,6 +2,7 @@ import { LogOut as ILogOut, User as IUser, UserX as IUserX } from 'react-feather
 import { Link } from 'react-router-dom'
 import { useContext } from "react";
 import { AuthGoogleContext } from "../../contexts/authGoogle";
+import Logo from '../svg/Logo'
 
 function Navbar() {
   const { user, signOut } = useContext(AuthGoogleContext);
@@ -18,9 +19,9 @@ function Navbar() {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <Link to="/" className="navbar-brand d-none d-lg-block           col-2       me-0 px-3 fs-6">Ticket.io</Link>
-      <Link to="/" className="navbar-brand d-none d-md-block d-lg-none col-1 col-2 me-0 px-3 fs-6">Ticket</Link>
-      <Link to="/" className="navbar-brand d-none d-sm-block d-md-none col-1 col-2 me-0 px-3 fs-6">Tk</Link>
+      <Link to="/" className="navbar-brand d-none d-lg-block           col-2       me-0 px-3 fs-6" style={{width:"10em"}}><Logo dark={true} /></Link>
+      <Link to="/" className="navbar-brand d-none d-md-block d-lg-none col-1 col-2 me-0 px-3 fs-6" style={{width:"10em"}}><Logo dark={true} /></Link>
+      <Link to="/" className="navbar-brand d-none d-sm-block d-md-none col-1 col-2 me-0 px-3 fs-6" style={{width:"10em"}}><Logo dark={true} /></Link>
       <div className="navbar-nav">
         <div className="nav-item text-nowrap d-flex mx-2">
           <div className="feather-props text-light text-end py-2">
