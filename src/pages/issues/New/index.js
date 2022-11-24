@@ -53,7 +53,8 @@ function NewIssue() {
   const onSubmit = (e) => {
     e.group_id = select.value
     e.prev_conclusion = selectDate
-    setResult("POST:\n" + JSON.stringify(e, null, 2) + "\n(e depois redirecionar para página Listar Problemas)")
+    setResult("POST:\n" + JSON.stringify(e, null, 2) + 
+    "\n(redirecionar para página Listar Problemas qnd o backend confirmar)")
   }
 
   return (

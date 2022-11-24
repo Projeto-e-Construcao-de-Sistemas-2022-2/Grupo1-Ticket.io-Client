@@ -39,7 +39,8 @@ function NewGroup() {
     const selectArr = []
     select.map((i)=> selectArr.push(i.value))
     e.members = selectArr
-    setResult("POST:\n" + JSON.stringify(e, null, 2) + "\n(e depois redirecionar para página Listar Grupos)")
+    setResult("POST:\n" + JSON.stringify(e, null, 2) + 
+    "\n(redirecionar para página Listar Grupos Solucionadores qnd o backend confirmar)")
   }
 
   return (
