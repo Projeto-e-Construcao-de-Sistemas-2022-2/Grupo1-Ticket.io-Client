@@ -12,7 +12,7 @@ function Modal(props){
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-            <button type="button" onClick={props.onClick} data-bs-dismiss="modal" className="btn btn-primary">{props.confirm || "Confirmar"}</button>
+            <button type={props.submit? "submit" : "button"} onClick={props.onClick || null} data-bs-dismiss="modal" className="btn btn-primary">{props.confirm || "Confirmar"}</button>
           </div>
         </div>
       </div>

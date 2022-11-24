@@ -6,6 +6,10 @@ import axios from 'axios';
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 
+/* documentação axios: https://axios-http.com/ptbr/docs/intro */
+/* documentação react-data-table-component: https://react-data-table-component.netlify.app/ */
+/* https://www.npmjs.com/package/react-data-table-component-extensions */
+
 function Issues() {
   const [data, setData] = useState([])
   const [pending, setPending] = useState([])
@@ -90,6 +94,7 @@ function Issues() {
             columns={columns}
             data={data}
             theme="dark"
+            keyField={'email'}
             onRowClicked={data => {
               return navigate("/issues/"+data.login.uuid)
             }}
@@ -101,7 +106,6 @@ function Issues() {
           />}
         </DataTableExtensions>
       </div>
-      <p>documentação: https://react-data-table-component.netlify.app/</p>
       <p>api: https://randomuser.me/api/?results=50</p>
     </>
   )
