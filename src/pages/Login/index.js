@@ -10,12 +10,24 @@ function Login() {
   if (!signed) {
     return (
       <>
-        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-          <h1 className="h2">Autenticar-se</h1>
+        <div 
+          className="login-container row d-flex align-items-center m-0" 
+          style={{ position:'absolute', top:0, left:0, zIndex:999999, width:'100%', height:'100%'}}
+        >
+          <div className="rounded row d-flex align-items-center m-auto col-10 col-md-6 col-lg-5 col-xl-3 bg-primary text-light p-4 p-md-5 ">
+            <p className="mt-3 mb-4 text-center fs-3 text-uppercase user-select-none">Entrar</p>
+            <button className="btn btn-outline-light d-inline-flex align-items-center justify-content-center" onClick={handleLoginFromGoogle}>
+              <img className="mx-2" height="24" width="24" src="https://cdn.cdnlogo.com/logos/g/35/google-icon.svg" /> 
+              Logar com Google 
+            </button>
+            <p className="mt-3 text-center user-select-none">ou</p>
+            <label htmlFor="email" className="fs-6">E-mail</label>
+            <input type="email" name="email" placeholder="usuario@email.com" id="email" className="form-control mb-3" />
+            <label htmlFor="password" className="fs-6">Senha</label>
+            <input type="password" name="password" placeholder="pudim123" id="password" className="form-control mb-3" />
+            <button className="mb-5 btn btn-outline-light">Login</button>
+          </div>
         </div>
-        <p>Você não está logado no sistema, para se autenticar ou se cadastrar, clique no botão abaixo</p>
-        <button className="btn btn-primary" onClick={handleLoginFromGoogle}><img height="16" width="16" src="https://cdn.simpleicons.org/google/white" /> Logar com o Google</button>
-        
       </>
     )
   } else {

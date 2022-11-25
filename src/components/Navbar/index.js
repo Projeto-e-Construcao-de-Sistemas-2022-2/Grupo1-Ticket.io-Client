@@ -22,7 +22,7 @@ function Navbar() {
       <Link to="/" className="navbar-brand d-none d-sm-block px-2" style={{height:"2em"}}><Logo dark={true} /></Link>
       <div className="navbar-nav">
         <div className="nav-item text-nowrap d-flex mx-2">
-          <div className="feather-props text-light text-end py-2">
+          <div className="feather-props text-light text-end user-select-none py-2">
             <span>{signedUser? signedUser.displayName : "Não autenticado"}</span>
             {signedUser ? <IUser className='user mx-2' /> : <IUserX className='user mx-2' />}
           </div>
