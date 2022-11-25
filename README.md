@@ -21,18 +21,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [Node.js](https://nodejs.org/pt-br/) instalado na máquina
 
 ### Instalação
-Na pasta do projeto, execute o comando
+Na pasta do projeto, execute o comando:
 
 `npm install`
 
-Isso vai instalar todas as dependências e frameworks listados em package.json e o projeto estará pronto para ser compilado.
+O Node.js instalará todas as dependências e frameworks listados em package.json e o projeto estará pronto para ser compilado.
 
 ### Rodar o projeto
 
-Na pasta do projeto, execute o comando
+Na pasta do projeto, execute o comando:
 
 `npm start`
 
-Isso vai rodar o aplicativo em modo desenvolvimento e redicionarar para o navegador em [http://localhost:3000](http://localhost:3000).  
+O aplicativo rodará em modo desenvolvimento e redirecionará para o navegador em [http://localhost:3000](http://localhost:3000).  
 
-A página irá recarregar sempre que fizer mudanças no arquivo.
+A página irá recarregar sempre que fizer mudança em algum arquivo.
