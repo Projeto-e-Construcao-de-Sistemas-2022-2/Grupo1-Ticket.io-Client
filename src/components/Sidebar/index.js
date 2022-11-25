@@ -66,7 +66,7 @@ function Sidebar() {
   }
 
   return (
-    user && <nav id="sidebarMenu" className={"d-sm-block bg-primary sidebar collapse-horizontal col-lg-2 collapse " + (clicked && " collapse ") + (mdExpanded ? " col-sm-5 col-md-3" : " col-sm-1")} onMouseEnter={()=>handleMdExpand(true)} onMouseLeave={()=>handleMdExpand(false)}>
+    user && <nav id="sidebarMenu" className={"d-sm-block bg-primary sidebar collapse-horizontal col-lg-3 col-xl-3 collapse " + (clicked && " collapse ") + (mdExpanded ? " col-sm-5 col-md-4" : " col-sm-1")} onMouseEnter={()=>handleMdExpand(true)} onMouseLeave={()=>handleMdExpand(false)}>
       <div className="position-sticky pt-1 sidebar-sticky">
         <ul className="nav flex-column">
           <li className={"mt-3 nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
@@ -77,7 +77,7 @@ function Sidebar() {
           </li>
           <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <NavLink to="groups/new" end className="feather-props nav-link" data-tip="Cadastrar grupo solucionador" onClick={()=>{setClicked(true)}}>
-            <IPlus />
+              <IPlus />
               <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Grupo solucionador</span>
             </NavLink>
           </li>

@@ -58,7 +58,9 @@
         color: rgba(255, 255, 255, 1)
       }
       .nav-link {
-        color: rgba(255, 255, 255, 0.75)
+        color: rgba(255, 255, 255, 0.75);
+        padding-left: clamp(15px,2vw,26px);
+        padding-right: clamp(15px,2vw,26px);
       }
       .nav-link:hover {
         color: rgba(255, 255, 255, 0.5)
@@ -84,9 +86,31 @@
         overflow-y: auto; /* Scrollavel */
         white-space: nowrap;
       }
-      @media (min-width: 1280px) {
+      @media (min-width: 575px) {
+        nav {
+          min-width: 64px;
+        }
+      }
+      @media (min-width: 1100px) {
+        nav.col-lg-3 {
+          max-width: 280px;
+        }
+      }
+      @media (min-width: 1200px) {
         .container-custom{
-          max-width:836px;
+          max-width:600px;
+          margin: auto;
+        }
+      }
+      @media (min-width: 1300px) {
+        .container-custom{
+          max-width:700px;
+          margin: auto;
+        }
+      }
+      @media (min-width: 1600px) {
+        .container-custom{
+          max-width:1000px;
           margin: auto;
         }
       }
