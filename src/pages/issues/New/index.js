@@ -19,7 +19,7 @@ function NewIssue() {
   const [result, setResult] = useState("")
   //let options = []
   let getGroupsData = async () => {
-    let res = await axios.get('https://randomuser.me/api/?results=50')
+    let res = await axios.get('https://randomuser.me/api/?results=50&seed=SEMENTe&nat=gb,us,br')
     setGroupsData(res.data.results)
   }
 

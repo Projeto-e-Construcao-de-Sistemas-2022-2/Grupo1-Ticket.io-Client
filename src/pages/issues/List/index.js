@@ -16,7 +16,7 @@ function Issues() {
   const navigate = useNavigate();
 
   let getData = async () => {
-    let res = await axios.get('https://randomuser.me/api/?results=50')
+    let res = await axios.get('https://randomuser.me/api/?results=50&seed=SEMENTE&nat=gb,us,br')
     setData(res.data.results)
     setPending(false)
   }
@@ -106,7 +106,7 @@ function Issues() {
           />}
         </DataTableExtensions>
       </div>
-      <p>api: https://randomuser.me/api/?results=50</p>
+      <p>api: https://randomuser.me/api/?results=50&seed=SEMENTE&nat=gb,us,br</p>
     </>
   )
 }

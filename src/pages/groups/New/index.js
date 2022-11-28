@@ -15,7 +15,7 @@ function NewGroup() {
   const [emptySelect, setEmptySelect] = useState(true)
   const [result, setResult] = useState("")
   let getData = async () => {
-    let res = await axios.get('https://randomuser.me/api/?results=50')
+    let res = await axios.get('https://randomuser.me/api/?results=50&seed=SEED&nat=gb,us,br')
     setData(res.data.results)
   }
 
