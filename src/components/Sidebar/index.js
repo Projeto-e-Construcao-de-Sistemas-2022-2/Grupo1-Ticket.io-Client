@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { Home as IHome, Plus as IPlus, List as IList, Sliders as ISliders } from "react-feather"
 import { useContext } from "react"
@@ -6,6 +6,7 @@ import { AuthGoogleContext } from "../../contexts/authGoogle"
 import { useMediaQuery } from 'react-responsive'
 
 function Sidebar() {
+  const navigate = useNavigate();
   const [theme, setTheme] = useState('');
   const [mdExpanded, setMdExpanded] = useState(false)
   const [clicked, setClicked] = useState(true)
@@ -40,6 +41,8 @@ function Sidebar() {
     {value: "zephyr", text: "Zephyr"},
   ];
 
+  //{value: "morph", text: "Morph"},
+
   const { user } = useContext(AuthGoogleContext);
 
   useEffect(()=>{
@@ -57,6 +60,7 @@ function Sidebar() {
 
   const handleThemeChange = event => {
     setTheme(event.target.value);
+    navigate(0)
   }
   function handleMdExpand(bool) {
     const isOnMdBreakpoint = !(tabletBreakpointMax || tabletBreakpointMin)
@@ -116,7 +120,7 @@ function Sidebar() {
             </NavLink>
           </li>
         </ul>
-        <ul className="nav flex-column mb-2">
+        <ul className={"nav flex-column mb-2 "+(!(mdExpanded || tabletBreakpointMax || tabletBreakpointMin)? "mx-5 px-5" : "")}>
           <li className={"nav-item my-1 mx-0 px-2 mx-lg-0 d-sm-inline"+ (mdExpanded ? "" : " mx-sm-auto")}>
             <select className="form-select" aria-label="Theme select" value={theme} onChange={handleThemeChange}>
               {themes.map(option => (
