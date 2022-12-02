@@ -86,7 +86,7 @@ function Sidebar() {
             </NavLink>
           </li>
           <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
-            <NavLink to="issues/new" end className="feather-props nav-link" data-tip="Cadastrar ticket de problema" onClick={()=>{setClicked(true)}}>
+            <NavLink to="issues/new" end className="feather-props nav-link disabled" data-tip="Cadastrar ticket de problema" onClick={()=>{setClicked(true)}}>
               <IPlus />
               <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Ticket de problema</span>
             </NavLink>
@@ -98,13 +98,13 @@ function Sidebar() {
             </NavLink>
           </li>
           <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
-            <NavLink to="issues" end className="feather-props nav-link" data-tip="Visualizar problemas" onClick={()=>{setClicked(true)}}>
+            <NavLink to="issues" end className="feather-props nav-link disabled" data-tip="Visualizar problemas" onClick={()=>{setClicked(true)}}>
               <IList />
               <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Problemas</span>
             </NavLink>
           </li>
           <li className={"nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>
-            <NavLink to="solutions" end className="feather-props nav-link" data-tip="Visualizar soluções anteriores" onClick={()=>{setClicked(true)}}>
+            <NavLink to="solutions" end className="feather-props nav-link  disabled" data-tip="Visualizar soluções anteriores" onClick={()=>{setClicked(true)}}>
               <IList />
               <span className={"px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")}>Soluções anteriores</span>
             </NavLink>

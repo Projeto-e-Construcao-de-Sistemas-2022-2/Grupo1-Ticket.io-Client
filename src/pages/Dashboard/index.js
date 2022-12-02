@@ -14,23 +14,23 @@ function Dashboard() {
           <IPlus style={{}} />
           <p>Cadastrar Grupo Solucionador</p>
         </Link>
-        <Link to="issues/new" className={"btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
+        <Link to="issues/new" className={"disabled btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
           <IPlus style={{}} />
           <p>Cadastrar Ticket de Problema</p>
         </Link>
-        <Link to="settings" className={"btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
+        <Link to="settings" className={"disabled btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
           <IMail style={{}} />
           <p>Relatório Gerencial</p>
         </Link>
-        <Link to="groups" end className={"btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
+        <Link to="groups" className={"btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
           <IList style={{}} />
           <p>Listar Grupos Solucionadores</p>
         </Link>
-        <Link to="issues" className={"btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
+        <Link to="issues" className={"disabled btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
           <IList style={{}} />
           <p>Listar Problemas</p>
         </Link>
-        <Link to="solutions" className={"btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
+        <Link to="solutions" className={"disabled btn btn-square mb-2 btn-"+(themeColorException? "outline-secondary" : "outline-primary")}>
           <IList style={{}} />
           <p>Listar Soluções Anteriores</p>
         </Link>

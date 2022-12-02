@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import Modal from '../../../components/Modal'
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 
 /* documentação react-select: https://react-select.com/ */
 /* documentação react-hook-form: https://react-hook-form.com/get-started/ */
@@ -14,9 +15,21 @@ function NewGroup() {
   const [select, setSelect] = useState(null)
   const [emptySelect, setEmptySelect] = useState(true)
   const [result, setResult] = useState("")
+  const navigate = useNavigate()
   let getData = async () => {
-    let res = await axios.get('https://randomuser.me/api/?results=50&seed=SEED&nat=gb,us,br')
+    //let res = await axios.get('https://randomuser.me/api/?results=50&seed=SEED&nat=gb,us,br')
+    //setData(res.data.results)
+    let res = await axios.get(process.env.REACT_APP_SERVER+'/user')
     setData(res.data.results)
+  }
+  let postData = async (data) => {
+    await axios.post(process.env.REACT_APP_SERVER+'/group', data)
+    .then(function(res){
+      navigate("/groups/"+res.data.id)
+    })
+    .catch(function(error){
+      console.log(error)
+    })
   }
 
   useEffect(()=>{
@@ -24,7 +37,7 @@ function NewGroup() {
       getData()
     } else {
       data.map(function(op){
-        var item = {value: op.email, label: op.name.first + " " + op.name.last + " {" + op.email + "}"}
+        var item = {value: op.id, label: (op.name? op.name : "sem nome") + " {" + op.email + "}"}
         setOptions(options => [...options, item])
       })
     }
@@ -38,9 +51,8 @@ function NewGroup() {
   const onSubmit = (e) => {
     const selectArr = []
     select.map((i)=> selectArr.push(i.value))
-    e.members = selectArr
-    setResult("POST:\n" + JSON.stringify(e, null, 2) + 
-    "\n(redirecionar para página Listar Grupos Solucionadores qnd o backend confirmar)")
+    e.users = selectArr
+    postData(e)
   }
 
   return (
@@ -72,7 +84,7 @@ function NewGroup() {
           value={select}
           onChange={(e) => {handleSelect(e)}}
           defaultValue={[]}
-          name="members"
+          name="users"
           isLoading = {data.length<=0}
           options={options}
           placeholder = {data.length<=0 ? "Carregando..." : "Selecionar"}
@@ -83,7 +95,6 @@ function NewGroup() {
           <button type="reset" className="mx-2 px-5 btn btn-warning">Limpar</button>
           <button type="button" data-bs-toggle="modal" data-bs-target="#confirm" className="mx-3 px-5 btn btn-primary" disabled={emptySelect}>Enviar</button>
         </div>
-        <pre>{result}</pre>
         <Modal
           id="confirm"
           body="Deseja criar o grupo?"

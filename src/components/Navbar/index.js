@@ -6,12 +6,7 @@ import Logo from '../svg/Logo'
 
 function Navbar() {
   const { user, signOut } = useContext(AuthGoogleContext);
-  let signedUser
-  try{
-    signedUser = JSON.parse(user);
-  } catch (e) {
-    return null;
-  }
+  
   return (
     <header className="navbar navbar-dark sticky-top bg-primary container-fluid p-0">
       <div className='d-flex d-sm-none collapsed mx-1'>
@@ -23,8 +18,8 @@ function Navbar() {
       <div className="navbar-nav">
         <div className="nav-item text-nowrap d-flex mx-2">
           <div className="feather-props text-light text-end user-select-none py-2">
-            <span>{signedUser? signedUser.displayName : "Não autenticado"}</span>
-            {signedUser ? <IUser className='user mx-2' /> : <IUserX className='user mx-2' />}
+            <span>{user? user.displayName : "Não autenticado"}</span>
+            {user ? <IUser className='user mx-2' /> : <IUserX className='user mx-2' />}
           </div>
           {user && <Link to="login" data-bs-toggle="modal" data-bs-target="#logoutModal" className="nav-link px-2"><ILogOut /></Link>}
         </div>

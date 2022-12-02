@@ -12,13 +12,34 @@ import { useNavigate } from 'react-router-dom'
 
 function Groups() {
   const [data, setData] = useState([])
-  const [pending, setPending] = useState([])
+  const [pending, setPending] = useState(true)
   const navigate = useNavigate()
 
-  let getData = async () => {
-    let res = await axios.get('https://randomuser.me/api/?results=50&seed=SEMENTe&nat=gb,us,br')
-    setData(res.data.results)
-    setPending(false)
+  async function getData() {
+    let count = 0
+    let arr = []
+    let promises = []
+    await axios.all([
+      axios.get(process.env.REACT_APP_SERVER+'/group')
+    ]).then(
+      axios.spread((res) => {
+        res.data.results.forEach((group) => {         
+          promises.push(axios.get(process.env.REACT_APP_SERVER+'/group/'+group.id+'?members=true'))
+        })
+        let members = Promise.all(promises)
+        
+        res.data.results.forEach((group, i) => {
+          members.then(function (res) {
+            count=0
+            res[i].data.results.forEach(()=> count++)
+            group.membercount = count
+            console.log(count)
+          }).then(()=>setPending(false))
+          arr.push(group)
+          setData(arr)
+        })
+      })
+    ).catch((error) => console.error(error)) 
   }
 
   useEffect(()=>{
@@ -27,45 +48,21 @@ function Groups() {
 
   const columns = [
     {
-      id: 'firstname',
-      name: 'Name',
-      selector: row => row.name.first,
+      id: 'name',
+      name: 'Nome',
+      selector: row => row.name,
       sortable: true,
     },
     {
-      id: 'lastname',
-      name: 'Last name',
-      selector: row => row.name.last,
+      id: 'members',
+      name: 'Membros',
+      selector: row => row.membercount,
       sortable: true,
     },
     {
-      id: 'gender',
-      name: 'Gender',
-      selector: row => row.gender,
-      sortable: true,
-    },
-    {
-      id: 'country',
-      name: 'Country',
-      selector: row => row.location.country,
-      sortable: true,
-    },
-    {
-      id: 'state',
-      name: 'State',
-      selector: row => row.location.state,
-      sortable: true,
-    },
-    {
-      id: 'borndate',
-      name: 'Born date',
-      selector: row => row.dob.date,
-      sortable: true,
-    },
-    {
-      id: 'email',
-      name: 'E-mail',
-      selector: row => row.email,
+      id: 'created_at',
+      name: 'Data de criação',
+      selector: row => row.created_at,
       sortable: true,
     }
   ]
@@ -82,7 +79,7 @@ function Groups() {
             data={data}
             keyField={'email'}
             onRowClicked={data => {
-              return navigate("/issues/"+data.login.uuid)
+              return navigate("/groups/"+data.id)
             }}
             pointerOnHover
             pagination
@@ -96,7 +93,7 @@ function Groups() {
             theme="dark"
             keyField={'email'}
             onRowClicked={data => {
-              return navigate("/issues/"+data.login.uuid)
+              return navigate("/groups/"+data.id)
             }}
             pointerOnHover
             pagination
@@ -106,7 +103,6 @@ function Groups() {
           />}
         </DataTableExtensions>
       </div>
-      <p>api GET: https://randomuser.me/api/?results=50&seed=SEMENTe&nat=gb,us,br</p>
     </>
   )
 }
