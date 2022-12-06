@@ -33,7 +33,6 @@ function Groups() {
             count=0
             res[i].data.results.forEach(()=> count++)
             group.membercount = count
-            console.log(count)
           }).then(()=>setPending(false))
           arr.push(group)
           setData(arr)

@@ -7,7 +7,7 @@ import axios from 'axios'
 
 function Settings() {
   const { register, handleSubmit, formState: { errors } } = useForm()
-  const { user, signed } = useContext(AuthGoogleContext)
+  const { user, signed, signOut } = useContext(AuthGoogleContext)
   const [data, setData] = useState([])
   const [id, setId] = useState()
   const navigate = useNavigate()
@@ -25,7 +25,6 @@ function Settings() {
   }
   
   let patchData = async (_data) => {
-    console.log(_data)
     await axios.patch(process.env.REACT_APP_SERVER+'/user/'+data.id, _data)
     .then(function(res){
       navigate(0)
@@ -40,9 +39,9 @@ function Settings() {
   }
 
   let removeData = async () => {
-    await axios.delete(process.env.REACT_APP_SERVER+'/user/'+id)
+    await axios.delete(process.env.REACT_APP_SERVER+'/user/'+data.id)
     .then(function(){
-      navigate("/login")
+      signOut()
     })
   }
 

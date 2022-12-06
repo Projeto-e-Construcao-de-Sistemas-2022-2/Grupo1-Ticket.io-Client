@@ -23,8 +23,6 @@ export const AuthGoogleProvider = ({ children }) => {
     
   },[]);
 
-  
-
   async function signInGoogle() {
     await signInWithPopup(auth, provider)
     .then((result) => {
@@ -34,13 +32,10 @@ export const AuthGoogleProvider = ({ children }) => {
 
       axios.get(process.env.REACT_APP_SERVER+"/user?email="+user.email)
       .then(function(res){
-        if (res.data.results) {
-          user.localData = res.data.results
-          user.authorized = true
-        } else user.authorized = false
-        setUser(user);
+        let usr = { ...user, localData: res.data.results, authorized: (res.data.results ? true : false) }
+        setUser(usr)
         localStorage.setItem("@AuthFirebase:token", token);
-        localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+        localStorage.setItem("@AuthFirebase:user", JSON.stringify(usr));
       })
       .catch((error)=>{
         console.error(error)
