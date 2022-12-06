@@ -1,4 +1,4 @@
-# Ticket.io (cliente)
+# Ticket.io (cliente) 
 
 <img src="logo-light.png#gh-light-mode-only" alt="logo" style="width:100%">
 <img src="logo-dark.png#gh-dark-mode-only" alt="logo" style="width:100%">
