@@ -5,7 +5,7 @@ import DatePicker, { CalendarContainer } from "react-datepicker";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 /* documentação react-datepicker: https://reactdatepicker.com/ */
 /* documentação react-hook-form: https://react-hook-form.com/get-started/ */
@@ -14,6 +14,7 @@ function NewIssue() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm();
   const [selectDate, setSelectDate] = useState(
@@ -30,6 +31,15 @@ function NewIssue() {
     let res = await axios.get(process.env.REACT_APP_SERVER + "/group");
     setGroupsData(res.data.results);
   };
+
+  const generateLero = async() => {
+    await axios.get(process.env.REACT_APP_SERVER + "/lero")
+    .then((res)=>{
+      setValue("title", res.data.tpTitleLero),
+      setValue("desc", res.data.tpDescLero)
+    })
+    
+  }
 
   useEffect(() => {
     if (groupsData.length <= 0) {
@@ -63,9 +73,18 @@ function NewIssue() {
     );
   };
 
-  const handleSelect = (e) => {
+  const handleSelect = async(e) => {
     setSelect(e);
     setEmptySelect(false);
+    await axios.get(process.env.REACT_APP_SERVER + "/group/" + e.value + "?members=true")
+    .then((resMembers)=>{
+      let str = ""
+      resMembers.data.results.map((member) => {
+        str += member.name + "\ne-mail: "
+        str += member.email + ";\n\n"
+      })
+      setValue("devContact", str)
+    })
   };
 
   const postData = async (data) => {
@@ -110,12 +129,8 @@ function NewIssue() {
             {...register("title", {
               required: "Campo obrigatório",
               minLength: {
-                value: 6,
-                message: "Mínimo de 6 caracteres"
-              },
-              pattern: {
-                value: /^[a-zA-Z0-9 ]+$/i,
-                message: "Apenas caracteres alfanuméricos"
+                value: 3,
+                message: "Mínimo de 3 caracteres"
               }
             })}
           />
@@ -192,6 +207,7 @@ function NewIssue() {
             Enviar
           </button>
         </div>
+        <Link onClick={generateLero} className="link text-center">Gerador de Lero Lero</Link>
         <pre style={{ visibility: "hidden" }}>{result}</pre>
         <Modal id="confirm" body="Deseja modificar o TP?" submit />
       </form>

@@ -17,8 +17,6 @@ export default function UpdateIssue() {
     formState: { errors }
   } = useForm();
   const [selectDate, setSelectDate] = useState(null);
-  const [selectMinDate, setSelectMinDate] = useState(null);
-  
   const [groupsData, setGroupsData] = useState([]);
   const [groupsOptions, setOptions] = useState([]);
   const [issueData, setIssueData] = useState([]);

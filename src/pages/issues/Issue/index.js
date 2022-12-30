@@ -51,20 +51,15 @@ export default function Issue() {
       <p style={{ marginBottom: "0" }}>
         <strong>{tpData.title}</strong> &lt;{id}&gt;
       </p>
-      <p>
-        <strong>Descrição: </strong>
-        {tpData.desc}
-      </p>
+      <pre style={{whiteSpace: "pre-line"}}>{tpData.desc}</pre>
       <h3>Grupo atribuido:</h3>
       {tpGroupName && (
         <>
           <p style={{ marginBottom: "0" }}>
             <Link to={"/groups/" + tpData.group_id}>{tpGroupName}</Link>
           </p>
-          <p>
-            <strong>Contato: </strong>
-            {tpData.dev_contact}
-          </p>
+          <pre style={{whiteSpace: "pre-line"}}>{tpData.dev_contact}</pre>
+          
         </>
       )}
       {!tpGroupName && <p>Nenhum</p>}
