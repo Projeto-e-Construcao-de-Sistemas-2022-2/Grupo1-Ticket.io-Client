@@ -1,32 +1,37 @@
-import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import axios from 'axios'
-import Modal from '../../../components/Modal'
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
+import Modal from "../../../components/Modal";
+import { useNavigate } from "react-router-dom";
 
 function Group() {
-  const { id } = useParams()
-  const [groupData, setGroupData] = useState([])
-  const [groupMembers, setGroupMembers] = useState([])
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const [groupData, setGroupData] = useState([]);
+  const [groupMembers, setGroupMembers] = useState([]);
+  const navigate = useNavigate();
 
   let getData = async () => {
-    let groupRes = await axios.get(process.env.REACT_APP_SERVER+'/group/'+id)
-    setGroupData(groupRes.data.results[0])
-    let groupMembersRes = await axios.get(process.env.REACT_APP_SERVER+'/group/'+id+'?members=true')
-    setGroupMembers(groupMembersRes.data.results)
-  }
+    let groupRes = await axios.get(
+      process.env.REACT_APP_SERVER + "/group/" + id
+    );
+    setGroupData(groupRes.data.results);
+    let groupMembersRes = await axios.get(
+      process.env.REACT_APP_SERVER + "/group/" + id + "?members=true"
+    );
+    setGroupMembers(groupMembersRes.data.results);
+  };
 
   let removeData = async () => {
-    await axios.delete(process.env.REACT_APP_SERVER+'/group/'+id)
-    .then(function(){
-      navigate("/groups")
-    })
-  }
+    await axios
+      .delete(process.env.REACT_APP_SERVER + "/group/" + id)
+      .then(function () {
+        navigate("/groups");
+      });
+  };
 
-  useEffect(()=>{
-    getData()
-  }, [])
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <>
@@ -38,23 +43,37 @@ function Group() {
       <h3>Data de criação:</h3>
       <p>{groupData.created_at}</p>
       <h3>Membros:</h3>
-      <div className='mb-4'>
-      {groupMembers.map((member)=>
-        <p key = {member.id}>{member.name} ({member.email})</p>
-      )}
+      <div className="mb-4">
+        {groupMembers.map((member) => (
+          <p key={member.id}>
+            {member.name} ({member.email})
+          </p>
+        ))}
       </div>
-      <div className='d-flex flex-column'>
-        <Link to={"/groups/"+groupData.id+"/update"} className='m-2 btn btn-primary'>Modificar grupo</Link>
-        <Link type="button" data-bs-toggle="modal" data-bs-target="#confirm" className='m-2 btn btn-danger'>Excluir grupo</Link>
+      <div className="d-flex flex-column">
+        <Link
+          to={"/groups/" + groupData.id + "/update"}
+          className="m-2 btn btn-primary"
+        >
+          Modificar grupo
+        </Link>
+        <Link
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#confirm"
+          className="m-2 btn btn-danger"
+        >
+          Excluir grupo
+        </Link>
       </div>
       <Modal
         id="confirm"
         danger
         body="Deseja excluir o grupo?"
         onClick={removeData}
-        />
+      />
     </>
-  )
+  );
 }
 
-export default Group
+export default Group;

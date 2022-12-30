@@ -82,11 +82,11 @@ export const AuthGoogleProvider = ({ children }) => {
             localStorage.setItem("@AuthFirebase:user", JSON.stringify(usr));
             return "";
           })
-          .catch((error) => {
+          .catch(() => {
             return "Erro interno: tente novamente mais tarde";
           });
       })
-      .catch((error) => {
+      .catch(() => {
         return "O e-mail não está cadastrado ou a senha está incorreta";
       });
   }
@@ -110,7 +110,7 @@ export const AuthGoogleProvider = ({ children }) => {
             localStorage.setItem("@AuthFirebase:user", JSON.stringify(usr));
             return "";
           })
-          .catch((error) => {
+          .catch(() => {
             return "Erro interno: confira os dados ou tente mais tarde";
           });
       })

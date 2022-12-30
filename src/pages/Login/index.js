@@ -52,14 +52,14 @@ function Login() {
     return (
       <>
         <div className="login-container row d-flex align-items-center m-0">
-          <div className="row d-flex align-items-center m-auto col-10 col-md-6 col-lg-5 col-xl-4 bg-primary text-light btn">
+          <div className="btn row d-flex align-items-center m-auto col-10 col-md-6 col-lg-5 col-xl-4 bg-primary text-light">
             {forgotPassword ? (
               // Tela de redefinir senha
               <form
                 onSubmit={handleSubmit(onResetSubmit)}
                 className="row d-flex align-items-center m-auto"
               >
-                <p className="mt-3 mb-4 fs-3 text-uppercase user-select-none">
+                <p className="mt-3 mb-4 text-center fs-3 text-uppercase user-select-none">
                   Redefinir senha
                 </p>
                 <label htmlFor="email" className="fs-6">
@@ -93,7 +93,7 @@ function Login() {
                 {errorMessage && <p className="text-danger">{errorMessage}</p>}
                 <Link
                   to="#"
-                  className="my-1 p-1 w-100 link-light"
+                  className="my-1 p-1 w-100 link-light text-center"
                   onClick={() => {
                     setForgotPassword(false);
                   }}
@@ -107,7 +107,7 @@ function Login() {
                 onSubmit={handleSubmit(onLoginSubmit)}
                 className="row d-flex align-items-center m-auto"
               >
-                <p className="mt-3 mb-4 fs-3 text-uppercase user-select-none">
+                <p className="mt-3 mb-4 text-center fs-3 text-uppercase user-select-none">
                   Entrar
                 </p>
                 <button
@@ -124,7 +124,7 @@ function Login() {
                   />
                   Autenticar-se com Google
                 </button>
-                <p className="mt-3 user-select-none">ou</p>
+                <p className="mt-3 text-center user-select-none">ou</p>
                 <label htmlFor="email" className="fs-6">
                   E-mail
                 </label>
@@ -170,7 +170,7 @@ function Login() {
                 {errorMessage && <p className="text-danger">{errorMessage}</p>}
                 <Link
                   to="#"
-                  className="my-1 p-1 w-100 link-light"
+                  className="my-1 p-1 w-100 link-light text-center"
                   onClick={() => {
                     setForgotPassword(true);
                   }}
@@ -179,7 +179,7 @@ function Login() {
                 </Link>
                 <Link
                   to="#"
-                  className="my-1 p-1 w-100 link-light"
+                  className="my-1 p-1 w-100 link-light text-center"
                   onClick={() => {
                     setLogin(!login);
                   }}
@@ -193,7 +193,7 @@ function Login() {
                 onSubmit={handleSubmit(onRegisterSubmit)}
                 className="row d-flex align-items-center m-auto"
               >
-                <p className="mt-3 mb-4 fs-3 text-uppercase user-select-none">
+                <p className="mt-3 mb-4 text-center fs-3 text-uppercase user-select-none">
                   CADASTRAR
                 </p>
                 <label htmlFor="email" className="fs-6">
@@ -271,7 +271,7 @@ function Login() {
                 {errorMessage && <p className="text-danger">{errorMessage}</p>}
                 <Link
                   to="#"
-                  className="my-1 p-1 w-100 link-light"
+                  className="my-1 p-1 w-100 link-light text-center"
                   onClick={() => {
                     setLogin(!login);
                   }}

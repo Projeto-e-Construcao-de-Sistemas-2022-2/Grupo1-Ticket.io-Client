@@ -12,7 +12,9 @@ function UpdateGroup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [data, setData] = useState([])
   const [options, setOptions] = useState([])
-  const [emptySelect, setEmptySelect] = useState(false)
+  const [select, setSelect] = useState(null)
+  const [emptySelect, setEmptySelect] = useState(true)
+  const [result, setResult] = useState("")
   const [groupData, setGroupData] = useState([])
   const [groupMembers, setGroupMembers] = useState([])
   const { id } = useParams()
@@ -24,7 +26,7 @@ function UpdateGroup() {
     promises.push(axios.get(process.env.REACT_APP_SERVER+'/user'))
 
     await Promise.all(promises).then((res)=>{
-      setGroupData(res[0].data.results[0])
+      setGroupData(res[0].data.results)
       res[1].data.results.map(function(op){
         setGroupMembers(groupMembers => [...groupMembers, {value: op.id, label: op.name + " {" + op.email + "}"}])
       })

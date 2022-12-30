@@ -32,7 +32,6 @@ function Settings() {
     await axios
       .patch(process.env.REACT_APP_SERVER + "/user/" + data.id, _data)
       .then(function (res) {
-        alert("Perfil alterado")
         navigate(0);
       });
   };
