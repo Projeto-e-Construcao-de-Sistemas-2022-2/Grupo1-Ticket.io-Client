@@ -17,7 +17,7 @@ function UpdateGroup() {
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
   const [select, setSelect] = useState(null);
-  const [emptySelect, setEmptySelect] = useState(true);
+  const [emptySelect, setEmptySelect] = useState(false);
   const [result, setResult] = useState("");
   const [groupData, setGroupData] = useState([]);
   const [groupMembers, setGroupMembers] = useState([]);
@@ -122,9 +122,9 @@ function UpdateGroup() {
           classNamePrefix="select"
         />
         <div className="my-4 col-12 d-flex justify-content-center">
-          <button type="reset" className="mx-2 px-5 btn btn-warning">
+          {/* <button type="reset" className="mx-2 px-5 btn btn-warning">
             Limpar
-          </button>
+          </button> */}
           <button
             type="button"
             data-bs-toggle="modal"
@@ -136,7 +136,7 @@ function UpdateGroup() {
           </button>
         </div>
         <pre style={{ visibility: "hidden" }}>{result}</pre>
-        <Modal id="confirm" body="Deseja alterar o grupo?" submit />
+        <Modal id="confirm" body="Deseja modificar o grupo?" submit />
       </form>
     </>
   );

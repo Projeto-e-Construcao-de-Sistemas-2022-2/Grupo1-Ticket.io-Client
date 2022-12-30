@@ -179,7 +179,7 @@ function NewIssue() {
           />
         </div>
         <div className="my-4 col-12 d-flex justify-content-center">
-          <button type="reset" className="mx-2 px-5 btn btn-warning">
+          <button type="reset" className="mx-2 px-5 btn btn-warning" onClick={()=>setSelect(null)}>
             Limpar
           </button>
           <button
@@ -193,7 +193,7 @@ function NewIssue() {
           </button>
         </div>
         <pre style={{ visibility: "hidden" }}>{result}</pre>
-        <Modal id="confirm" body="Deseja criar TP?" submit />
+        <Modal id="confirm" body="Deseja modificar o TP?" submit />
       </form>
     </>
   );

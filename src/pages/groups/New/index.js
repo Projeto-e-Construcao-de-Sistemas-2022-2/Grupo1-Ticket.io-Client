@@ -107,7 +107,7 @@ function NewGroup() {
           classNamePrefix="select"
         />
         <div className="my-4 col-12 d-flex justify-content-center">
-          <button type="reset" className="mx-2 px-5 btn btn-warning">
+          <button type="reset" className="mx-2 px-5 btn btn-warning" onClick={()=>setSelect(null)}>
             Limpar
           </button>
           <button

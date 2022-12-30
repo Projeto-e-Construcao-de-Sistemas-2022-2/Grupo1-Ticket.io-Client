@@ -17,6 +17,8 @@ export default function UpdateIssue() {
     formState: { errors }
   } = useForm();
   const [selectDate, setSelectDate] = useState(null);
+  const [selectMinDate, setSelectMinDate] = useState(null);
+  
   const [groupsData, setGroupsData] = useState([]);
   const [groupsOptions, setOptions] = useState([]);
   const [issueData, setIssueData] = useState([]);
@@ -98,7 +100,7 @@ export default function UpdateIssue() {
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Criar Ticket de Problema</h1>
+        <h1 className="h2">Atualizar Ticket de Problema</h1>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -190,9 +192,9 @@ export default function UpdateIssue() {
           />
         </div>
         <div className="my-4 col-12 d-flex justify-content-center">
-          <button type="reset" className="mx-2 px-5 btn btn-warning">
+          {/* <button type="reset" className="mx-2 px-5 btn btn-warning">
             Limpar
-          </button>
+          </button> */}
           <button
             type="button"
             data-bs-toggle="modal"
