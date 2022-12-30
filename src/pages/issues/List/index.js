@@ -17,39 +17,13 @@ export default function Issues() {
   const navigate = useNavigate();
 
   async function getData() {
-    let count = 0;
-    let arr = [];
-    let promises = [];
-    await axios
-      .all([axios.get(process.env.REACT_APP_SERVER + "/issue")])
-      .then(
-        axios.spread((res) => {
-          res.data.results.forEach((group) => {
-            promises.push(
-              axios.get(
-                process.env.REACT_APP_SERVER +
-                  "/group/" +
-                  group.id +
-                  "?members=true"
-              )
-            );
-          });
-          let members = Promise.all(promises);
-
-          res.data.results.forEach((group, i) => {
-            members
-              .then(function (res) {
-                count = 0;
-                res[i].data.results.forEach(() => count++);
-                group.membercount = count;
-              })
-              .then(() => setPending(false));
-            arr.push(group);
-            setData(arr);
-          });
-        })
-      )
-      .catch((error) => console.error(error));
+    await axios.get(process.env.REACT_APP_SERVER + "/issue")
+    .then((res) => {
+      setData(res.data.results)
+      setPending(false)
+    })
+    .catch((error) => console.error(error));
+    
   }
 
   useEffect(() => {
@@ -59,27 +33,22 @@ export default function Issues() {
   const columns = [
     {
       id: "title",
-      name: "Título",
+      name: "Problema",
       selector: (row) => row.title,
       sortable: true
     },
     {
-      id: "prevConclusion",
-      name: "Prev. de Conclusão",
-      selector: (row) =>
-        new Date(row.prev_conclusion).toLocaleDateString("pt-BR"),
+      id: "prev_conclusion",
+      name: "Previsão de conclusão",
+      selector: (row) => new Date(row.prev_conclusion).toLocaleDateString("pt-BR"),
       sortable: true
     },
     {
       id: "conclusion",
       name: "Conclusão",
-      selector: (row) =>
-        row.conclusion
-          ? new Date(row.conclusion).toLocaleDateString("pt-BR")
-          : "Não solucionado",
+      selector: (row) => row.conclusion ? new Date(row.conclusion).toLocaleDateString("pt-BR") : "Em andamento",
       sortable: true
     },
-
     {
       id: "created_at",
       name: "Data de criação",
@@ -91,7 +60,7 @@ export default function Issues() {
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Lista de Tickets de Problema</h1>
+        <h1 className="h2">Lista de Problemas</h1>
       </div>
       <div
         className={
