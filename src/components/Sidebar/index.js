@@ -165,7 +165,7 @@ function Sidebar() {
               <NavLink
                 to="issues/new"
                 end
-                className="feather-props nav-link disabled"
+                className="feather-props nav-link"
                 onClick={() => {
                   setClicked(true);
                 }}

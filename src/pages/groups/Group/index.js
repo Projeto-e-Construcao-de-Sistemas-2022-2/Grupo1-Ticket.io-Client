@@ -41,7 +41,7 @@ function Group() {
       <h3>Nome do grupo:</h3>
       <p>{groupData.name}</p>
       <h3>Data de criação:</h3>
-      <p>{groupData.created_at}</p>
+      <p>{new Date(groupData.created_at).toLocaleString("pt-BR")}</p>
       <h3>Membros:</h3>
       <div className="mb-4">
         {groupMembers.map((member) => (

@@ -14,6 +14,7 @@ export default function Issue() {
     await axios
       .get(process.env.REACT_APP_SERVER + "/issue/" + id)
       .then(async (tpRes) => {
+        if (!tpRes.data.results) return;
         setTpData(tpRes.data.results);
         await axios
           .get(
@@ -31,9 +32,9 @@ export default function Issue() {
 
   let removeData = async () => {
     await axios
-      .delete(process.env.REACT_APP_SERVER + "/group/" + id)
+      .delete(process.env.REACT_APP_SERVER + "/issue/" + id)
       .then(function () {
-        navigate("/groups");
+        navigate("/issues");
       });
   };
 
@@ -97,7 +98,7 @@ export default function Issue() {
 
       <div className="d-flex flex-column">
         <Link
-          to={"/issue/" + tpData.id + "/update"}
+          to={"/issues/" + tpData.id + "/update"}
           className="m-2 btn btn-primary"
         >
           Modificar TP
@@ -114,8 +115,17 @@ export default function Issue() {
       <Modal
         id="confirm"
         danger
-        body="Deseja excluir o grupo?"
+        body={
+          <>
+            <p>
+              Isso EXCLUIRÁ o problema, para encerrar use a opção
+              "MODIFICAR/ENCERRAR PROBLEMA".
+            </p>
+            <p>Ainda deseja prosseguir com a exclusão?</p>
+          </>
+        }
         onClick={removeData}
+        confirm="Excluir"
       />
     </>
   );

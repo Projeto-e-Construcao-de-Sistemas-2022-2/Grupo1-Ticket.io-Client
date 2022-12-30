@@ -35,7 +35,7 @@ function Dashboard() {
         <Link
           to="issues/new"
           className={
-            "disabled btn btn-square mb-2 btn-" +
+            "btn btn-square mb-2 btn-" +
             (themeColorException ? "outline-secondary" : "outline-primary")
           }
         >
