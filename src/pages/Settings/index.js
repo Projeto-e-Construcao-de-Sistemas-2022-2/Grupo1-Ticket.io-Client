@@ -13,7 +13,6 @@ function Settings() {
   } = useForm();
   const { user, signed, signOut } = useContext(AuthGoogleContext);
   const [data, setData] = useState([]);
-  const [id, setId] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +32,7 @@ function Settings() {
     await axios
       .patch(process.env.REACT_APP_SERVER + "/user/" + data.id, _data)
       .then(function (res) {
+        alert("Perfil alterado")
         navigate(0);
       });
   };
@@ -43,7 +43,6 @@ function Settings() {
       {}
     );
     if (Object.keys(o).length === 0 && o.constructor === Object) return;
-    console.log(o);
     patchData(o);
   };
 

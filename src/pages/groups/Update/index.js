@@ -12,9 +12,7 @@ function UpdateGroup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [data, setData] = useState([])
   const [options, setOptions] = useState([])
-  const [select, setSelect] = useState(null)
-  const [emptySelect, setEmptySelect] = useState(true)
-  const [result, setResult] = useState("")
+  const [emptySelect, setEmptySelect] = useState(false)
   const [groupData, setGroupData] = useState([])
   const [groupMembers, setGroupMembers] = useState([])
   const { id } = useParams()

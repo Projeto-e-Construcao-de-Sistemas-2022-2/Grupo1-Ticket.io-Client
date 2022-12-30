@@ -70,7 +70,7 @@ function Sidebar() {
   }
 
   return (
-    user && <nav id="sidebarMenu" className={"d-sm-block bg-primary sidebar collapse-horizontal col-lg-3 col-xl-3 collapse " + (clicked && " collapse ") + (mdExpanded ? " col-sm-5 col-md-4" : " col-sm-1")} onMouseEnter={()=>handleMdExpand(true)} onMouseLeave={()=>handleMdExpand(false)}>
+    user && <nav id="sidebarMenu" className={"d-sm-block bg-primary sidebar collapse-horizontal col-lg-3 col-xl-3 collapse " + (clicked && " collapse ") + (mdExpanded ? " col-sm-5 col-md-4" : " col-sm-1")} onMouseEnter={()=>handleMdExpand(true)} onMouseLeave={()=>handleMdExpand(false)}  style={{ backdropFilter: "blur(50px)" }} >
       <div className="position-sticky pt-1 sidebar-sticky">
         <ul className="nav flex-column">
           <li className={"mt-3 nav-item my-1 mx-0 mx-lg-0"+ (mdExpanded ? "" : " mx-sm-auto")}>

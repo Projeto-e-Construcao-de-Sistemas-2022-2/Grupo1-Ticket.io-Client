@@ -1,6 +1,6 @@
 function Modal(props){
   return(
-    <div className="modal fade" id={props.id} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade" id={props.id} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ zIndex: 1000000 }}>
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">

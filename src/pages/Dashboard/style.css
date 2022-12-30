@@ -5,6 +5,7 @@
     width: 150px;
     height: 150px;
     margin-bottom: 36px !important;
+    backdrop-filter: blur(50px);
 }
 .btn-square p{
     font-size: smaller;

@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { AuthGoogleContext } from "../../contexts/authGoogle";
 import "./style.css";
 
@@ -31,17 +31,17 @@ function Login() {
   }
 
   async function onResetSubmit(e) {
-    setErrorMessage(
-      await passwordReset(e.email).then((res) => {
-        if (res == "") {
-          setForgotPassword(false);
-        }
-      })
-    );
+    await passwordReset(e.email).then((res) => {
+      if (res === "200") {
+        setForgotPassword(false);
+      } else {
+        setErrorMessage(res);
+      }
+    });
   }
 
   async function handleLoginFromGoogle() {
-    await signInGoogle();
+    setErrorMessage(await signInGoogle());
   }
 
   useEffect(() => {
@@ -52,14 +52,14 @@ function Login() {
     return (
       <>
         <div className="login-container row d-flex align-items-center m-0">
-          <div className="row d-flex align-items-center m-auto col-10 col-md-6 col-lg-5 col-xl-4 bg-primary text-light">
+          <div className="row d-flex align-items-center m-auto col-10 col-md-6 col-lg-5 col-xl-4 bg-primary text-light btn">
             {forgotPassword ? (
               // Tela de redefinir senha
               <form
                 onSubmit={handleSubmit(onResetSubmit)}
                 className="row d-flex align-items-center m-auto"
               >
-                <p className="mt-3 mb-4 text-center fs-3 text-uppercase user-select-none">
+                <p className="mt-3 mb-4 fs-3 text-uppercase user-select-none">
                   Redefinir senha
                 </p>
                 <label htmlFor="email" className="fs-6">
@@ -90,14 +90,16 @@ function Login() {
                 <button type="submit" className="mb-4 btn btn-outline-light">
                   Enviar redefinição de senha
                 </button>
-                <button
-                  className="btn mb-4 p-1"
+                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                <Link
+                  to="#"
+                  className="my-1 p-1 w-100 link-light"
                   onClick={() => {
                     setForgotPassword(false);
                   }}
                 >
                   Fazer login
-                </button>
+                </Link>
               </form>
             ) : login ? (
               // Tela de login
@@ -105,7 +107,7 @@ function Login() {
                 onSubmit={handleSubmit(onLoginSubmit)}
                 className="row d-flex align-items-center m-auto"
               >
-                <p className="mt-3 mb-4 text-center fs-3 text-uppercase user-select-none">
+                <p className="mt-3 mb-4 fs-3 text-uppercase user-select-none">
                   Entrar
                 </p>
                 <button
@@ -122,7 +124,7 @@ function Login() {
                   />
                   Autenticar-se com Google
                 </button>
-                <p className="mt-3 text-center user-select-none">ou</p>
+                <p className="mt-3 user-select-none">ou</p>
                 <label htmlFor="email" className="fs-6">
                   E-mail
                 </label>
@@ -134,16 +136,16 @@ function Login() {
                   {...register("email", {
                     required: "Campo vazio",
                     minLength: {
-                      value: 8,
-                      message: "E-mail inválido"
+                      value: 3,
+                      message: "Formato de e-mail inválido"
                     },
                     maxLength: {
                       value: 40,
-                      message: "E-mail inválido"
+                      message: "Formato de e-mail inválido"
                     },
                     pattern: {
                       value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                      message: "E-mail inválido"
+                      message: "Formato de e-mail inválido"
                     }
                   })}
                 />
@@ -154,38 +156,36 @@ function Login() {
                 <input
                   type="password"
                   name="password"
-                  placeholder="pudim123"
+                  placeholder="••••••"
                   id="password"
                   className="form-control mb-1"
                   {...register("password", {
-                    required: "Campo vazio",
-                    minLength: {
-                      value: 6,
-                      message: "Senha inválida"
-                    }
+                    required: "Campo vazio"
                   })}
                 />
                 <p className="text-warning">{errors?.password?.message}</p>
                 <button type="submit" className="mb-2 btn btn-outline-light">
                   Login
                 </button>
-
-                <button
-                  className="btn p-1"
+                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                <Link
+                  to="#"
+                  className="my-1 p-1 w-100 link-light"
                   onClick={() => {
                     setForgotPassword(true);
                   }}
                 >
                   Esqueci a senha
-                </button>
-                <button
-                  className="mb-4 btn p-1"
+                </Link>
+                <Link
+                  to="#"
+                  className="my-1 p-1 w-100 link-light"
                   onClick={() => {
                     setLogin(!login);
                   }}
                 >
                   Cadastrar-se
-                </button>
+                </Link>
               </form>
             ) : (
               // Tela de cadastro
@@ -193,7 +193,7 @@ function Login() {
                 onSubmit={handleSubmit(onRegisterSubmit)}
                 className="row d-flex align-items-center m-auto"
               >
-                <p className="mt-3 mb-4 text-center fs-3 text-uppercase user-select-none">
+                <p className="mt-3 mb-4 fs-3 text-uppercase user-select-none">
                   CADASTRAR
                 </p>
                 <label htmlFor="email" className="fs-6">
@@ -227,7 +227,7 @@ function Login() {
                 <input
                   type="password"
                   name="password"
-                  placeholder="pudim123"
+                  placeholder="digite uma senha forte"
                   id="password"
                   className="form-control mb-1"
                   {...register("password", {
@@ -253,7 +253,7 @@ function Login() {
                 <input
                   type="password"
                   name="password2"
-                  placeholder="pudim123"
+                  placeholder="repita a senha"
                   id="password2"
                   className="form-control mb-1"
                   {...register("password2", {
@@ -268,17 +268,18 @@ function Login() {
                 <button type="submit" className="mb-2 btn btn-outline-light">
                   Cadastrar-se
                 </button>
-                <button
-                  className="mb-4 btn p-1"
+                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                <Link
+                  to="#"
+                  className="my-1 p-1 w-100 link-light"
                   onClick={() => {
                     setLogin(!login);
                   }}
                 >
                   Já possuo cadastro
-                </button>
+                </Link>
               </form>
             )}
-            {errorMessage && <p className="text-danger">{errorMessage}</p>}
           </div>
         </div>
       </>

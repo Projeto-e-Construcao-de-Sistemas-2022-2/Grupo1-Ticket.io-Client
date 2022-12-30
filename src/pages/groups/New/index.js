@@ -14,7 +14,6 @@ function NewGroup() {
   const [options, setOptions] = useState([])
   const [select, setSelect] = useState(null)
   const [emptySelect, setEmptySelect] = useState(true)
-  const [result, setResult] = useState("")
   const navigate = useNavigate()
   let getData = async () => {
     //let res = await axios.get('https://randomuser.me/api/?results=50&seed=SEED&nat=gb,us,br')

@@ -9,7 +9,7 @@ import { AuthGoogleContext } from "../../contexts/authGoogle";
 import Logo from "../svg/Logo";
 
 function Navbar() {
-  const { user, signOut } = useContext(AuthGoogleContext);
+  const { user } = useContext(AuthGoogleContext);
 
   return (
     <header className="navbar navbar-dark sticky-top bg-primary container-fluid p-0">

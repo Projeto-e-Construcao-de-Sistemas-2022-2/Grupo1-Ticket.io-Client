@@ -6,6 +6,7 @@ import { PrivateRoutes } from "./components/PrivateRoutes";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import MainContainer from "./components/MainContainer";
+import BgContainer from "./components/BgContainer";
 
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
@@ -28,8 +29,8 @@ import Complete from "./pages/Complete";
 
 function App() {
   return (
-    <>
-      <AuthGoogleProvider>
+    <AuthGoogleProvider>
+      <BgContainer>
         <Navbar />
         <Sidebar />
         <MainContainer>
@@ -56,8 +57,8 @@ function App() {
             <Route path="login" element={<Login />} />
           </Routes>
         </MainContainer>
-      </AuthGoogleProvider>
-    </>
+      </BgContainer>
+    </AuthGoogleProvider>
   );
 }
 
