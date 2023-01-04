@@ -13,7 +13,9 @@ function Settings() {
   } = useForm();
   const { user, signed, signOut } = useContext(AuthGoogleContext);
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
+  const [dataOutput, setDataOutput] = useState({})
+  const [reportSelectData, setReportSelectData] = useState({});
+  const [reportOutput, setReportOutput] = useState({})
 
   useEffect(() => {
     getData();
@@ -32,17 +34,33 @@ function Settings() {
     await axios
       .patch(process.env.REACT_APP_SERVER + "/user/" + data.id, _data)
       .then(function (res) {
-        navigate(0);
+        setDataOutput({success: true, message: "Perfil alterado com sucesso"});
       });
   };
 
-  const onSubmit = (e) => {
+  const onProfileSubmit = (e) => {
     let o = Object.entries(e).reduce(
       (acc, [k, v]) => (v ? { ...acc, [k]: v } : acc),
       {}
     );
+    if (o.name === user.displayName) delete o.name
+    console.log(o)
+    setDataOutput({})
     if (Object.keys(o).length === 0 && o.constructor === Object) return;
     patchData(o);
+  };
+
+  const patchReportCron = async (_data) => {
+    if (_data.cron)
+      await axios
+        .patch(process.env.REACT_APP_SERVER + "/report", _data)
+        .then(function (res) {
+          setReportOutput({success: true, message: "Período de envio alterado com sucesso"})
+        });
+  };
+  const handleReportPeriodChange = (e) => {
+    e.preventDefault()
+    setReportSelectData({cron: e.target.value})
   };
 
   let removeData = async () => {
@@ -59,7 +77,83 @@ function Settings() {
         <h1 className="h2">Configurações</h1>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
+        <p className="mt-3 mb-2 text-center fs-3 text-uppercase user-select-none">
+          Relatório Gerencial
+        </p>
+        
+        <div className="w-100 row d-flex flex-row mx-auto">
+          <div className="col-12 col-sm-9 px-0">
+            <label htmlFor="report" className="fs-6">
+              Período do envio automático
+            </label>
+            <select name="report" id="report" className="form-select" onChange={handleReportPeriodChange} defaultValue="">
+              <option value="" disabled hidden>Selecionar período</option>
+              <option value="* * * * *">À cada minuto (teste)</option>
+              <option value="0 0 * * 6">Semanal (todo sábado, às 00:00)</option>
+              <option value="0 0 1 * *">Mensal (primeiro dia do mês, às 00:00)</option>
+            </select>
+          </div>
+          <div className="col-12 col-sm-3 mt-auto px-0">
+            <button type="button" onClick={()=>patchReportCron(reportSelectData)} className="w-100 col btn btn-primary px-0">
+              Alterar
+            </button>
+          </div>
+        </div>
+        <p className="text-center my-2">
+          <Link
+              to={null}
+              onClick={async ()=>{
+                await axios.get(process.env.REACT_APP_SERVER+'/report?email='+user.email)
+                .then(async (res) => {
+                  setReportOutput({success: true, message: "E-mail gerencial enviado"})
+                })
+                .catch((error)=>setReportOutput({success: false, message: "Ocorreu um erro no envio"}))
+              }}
+              className="link"
+            >
+              Enviar manualmente para o meu e-mail
+          </Link>
+        </p>
+        <p className="text-center my-2">
+          <Link
+              to={null}
+              onClick={async ()=>{
+                await axios.get('https://ticket-io-auth-default-rtdb.firebaseio.com/email.json')
+                .then(async (res) => {
+                  const email = res.data
+                  if (!email.find(i => i==user.email))
+                    email.push(user.email)
+                  else 
+                    return setReportOutput({success: false, message: "E-mail já está cadastrado"})
+                  await axios.patch('https://ticket-io-auth-default-rtdb.firebaseio.com/.json',{email: email})
+                  .then(setReportOutput({success: true, message: "E-mail cadastrado"}))
+                  .catch((error)=>setReportOutput({success: false, message: "Ocorreu um erro"}))
+                })
+                .catch((error)=>setReportOutput({success: false, message: "Ocorreu um erro"}))
+              }}
+              className="link"
+            >
+              Cadastrar meu e-mail para receber automáticamente
+          </Link>
+        </p>
+        <p className={"mb-4 text-center text-"+ (reportOutput.success?"success":"warning")}>{reportOutput.message}</p>
+        <Modal
+          id="confirm"
+          title="Excluir cadastro"
+          body={
+            <>
+              {"Tem certeza que deseja excluir o seu cadastro?"}
+              <br />
+              {"Irá remover seu nome de todos os grupos associados. "}
+            </>
+          }
+          danger
+          onClick={removeData}
+        />
+      </form>
+
+      <form onSubmit={handleSubmit(onProfileSubmit)}>
         <p className="mt-3 mb-2 text-center fs-3 text-uppercase user-select-none">
           Alterar Cadastro
         </p>
@@ -152,9 +246,10 @@ function Settings() {
         <p className="text-warning">{errors?.cep?.message}</p>
 
         <div className="w-100 d-flex flex-column">
-          <button type="submit" className="w-50 mx-auto my-3 btn btn-primary">
+          <button type="button" onClick={handleSubmit(onProfileSubmit)} className="w-50 mx-auto my-3 btn btn-primary">
             Confirmar alterações
           </button>
+          <p className={"my-2 text-center text-"+ (dataOutput.success?"success":"warning")}>{dataOutput.message}</p>
           <Link
             to={null}
             data-bs-toggle="modal"
