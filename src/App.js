@@ -23,6 +23,7 @@ import UpdateIssue from "./pages/issues/Update";
 
 import Solutions from "./pages/solutions/List";
 import Solution from "./pages/solutions/Solution";
+import NewSolution from "./pages/solutions/New";
 import UpdateSolution from "./pages/solutions/Update";
 import Login from "./pages/Login";
 import Complete from "./pages/Complete";
@@ -51,6 +52,7 @@ function App() {
 
               <Route path="solutions" element={<Solutions />} />
               <Route path="solutions/:id" element={<Solution />} />
+              <Route path="solutions/new" element={<NewSolution />} />
               <Route path="solutions/:id/update" element={<UpdateSolution />} />
             </Route>
             <Route path="complete" element={<Complete />} />

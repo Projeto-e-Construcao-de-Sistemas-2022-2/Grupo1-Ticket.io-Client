@@ -5,6 +5,7 @@ import {
   GroupAddTwoTone,
   TuneTwoTone,
   PostAddTwoTone,
+  AddTaskTwoTone,
   Groups2TwoTone,
   ListAltTwoTone,
   HomeRepairServiceTwoTone
@@ -186,6 +187,31 @@ function Sidebar() {
                 </NavLink>
               </li>
             }
+            {(role==="g" || role==="d") &&
+              <li
+                className={
+                  "nav-item my-1 mx-0 mx-lg-0" + (mdExpanded ? "" : " mx-sm-auto")
+                }
+              >
+                <NavLink
+                  to="solutions/new"
+                  end
+                  className="feather-props nav-link"
+                  onClick={() => {
+                    setClicked(true);
+                  }}
+                >
+                  <AddTaskTwoTone />
+                  <span
+                    className={
+                      "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
+                    }
+                  >
+                    Cadastrar Causa-Raiz
+                  </span>
+                </NavLink>
+              </li>
+            }
             <li
               className={
                 "nav-item my-1 mx-0 mx-lg-0" + (mdExpanded ? "" : " mx-sm-auto")
@@ -240,7 +266,7 @@ function Sidebar() {
               <NavLink
                 to="solutions"
                 end
-                className="feather-props nav-link  disabled"
+                className="feather-props nav-link"
                 onClick={() => {
                   setClicked(true);
                 }}

@@ -3,6 +3,7 @@ import {
   GroupAddTwoTone,
   AssessmentTwoTone,
   PostAddTwoTone,
+  AddTaskTwoTone,
   Groups2TwoTone,
   ListAltTwoTone,
   HomeRepairServiceTwoTone
@@ -48,6 +49,16 @@ function Dashboard() {
           <PostAddTwoTone />
           <p>Cadastrar Ticket de Problema</p>
         </Link>}
+        {(role==="g" || role==="d") && <Link
+          to="solutions/new"
+          className={
+            "btn btn-square mb-2 btn-" +
+            (themeColorException ? "outline-secondary" : "outline-primary")
+          }
+        >
+          <AddTaskTwoTone />
+          <p>Cadastrar Solução de Causa Raiz</p>
+        </Link>}
         <Link
           to="settings"
           className={
@@ -81,7 +92,7 @@ function Dashboard() {
         <Link
           to="solutions"
           className={
-            "disabled btn btn-square mb-2 btn-" +
+            "btn btn-square mb-2 btn-" +
             (themeColorException ? "outline-secondary" : "outline-primary")
           }
         >

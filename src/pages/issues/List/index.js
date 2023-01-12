@@ -34,7 +34,7 @@ export default function Issues() {
     {
       id: "title",
       name: "Problema",
-      selector: (row) => row.title,
+      selector: (row) => `{${row.id.slice(0,9)}...} ${row.title}`,
       sortable: true
     },
     {
