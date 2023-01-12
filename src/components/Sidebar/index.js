@@ -53,7 +53,8 @@ function Sidebar() {
   //{value: "morph", text: "Morph"},
 
   const { user } = useContext(AuthGoogleContext);
-  let role = user.localData.role
+  let role
+  if (user) role = user.localData.role
 
   useEffect(() => {
     if (clicked) setClicked(false);

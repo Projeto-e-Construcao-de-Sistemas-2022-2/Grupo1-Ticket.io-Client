@@ -43,7 +43,7 @@ export default function Issue() {
 
   useEffect(() => {
     getData();
-  });
+  },[]);
 
   return (
     <>
@@ -67,13 +67,14 @@ export default function Issue() {
       )}
       {!tpGroupName && <p>Nenhum</p>}
       <h3>Previsão de Conclusão:</h3>
-      <p>
+      <p className={(!tpData.conclusion && (new Date(tpData.prev_conclusion) <= new Date()))?"text-danger":""}>
         {new Date(tpData.prev_conclusion).toLocaleDateString("pt-br", {
           weekday: "long",
           day: "numeric",
           month: "long",
           year: "numeric"
         })}
+        {(!tpData.conclusion && (new Date(tpData.prev_conclusion) <= new Date())) && " (atrasado)"}
       </p>
       <h3>Conclusão:</h3>
       <p>
