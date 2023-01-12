@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Modal from "../../../components/Modal";
 import { useNavigate } from "react-router-dom";
+import { DoneOutlineTwoTone } from "@mui/icons-material";
 
 export default function Issue() {
   const { id } = useParams();
@@ -87,7 +88,7 @@ export default function Issue() {
               year: "numeric"
             })}
             &nbsp;
-            <Link to="">(Causa-Raiz)</Link>
+            <Link to={"/solutions/"+tpData.root_cause}>(Causa-Raiz)</Link>
           </>
         )}
       </p>
@@ -95,7 +96,18 @@ export default function Issue() {
       <h3>Data de criação:</h3>
       <p>{new Date(tpData.created_at).toLocaleString()}</p>
 
-
+      {(role==="d" || role==="g") && 
+        <>
+          <Link
+            to={"/issues/" + tpData.id + "/update?finish=true"}
+            className="d-flex flex-column m-2 btn btn-primary"
+          >
+            <span>
+            <DoneOutlineTwoTone /> Encerrar TP
+            </span>
+          </Link>
+        </>
+      }
       {(role==="q" || role==="g") &&
         <>
           <div className="d-flex flex-column">
