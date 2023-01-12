@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+import { AuthGoogleContext } from "../../../contexts/authGoogle";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Modal from "../../../components/Modal";
@@ -8,6 +9,8 @@ function Group() {
   const { id } = useParams();
   const [groupData, setGroupData] = useState([]);
   const [groupMembers, setGroupMembers] = useState([]);
+  const { user } = useContext(AuthGoogleContext);
+  let role = user.localData.role
   const navigate = useNavigate();
 
   let getData = async () => {
@@ -50,28 +53,33 @@ function Group() {
           </p>
         ))}
       </div>
-      <div className="d-flex flex-column">
-        <Link
-          to={"/groups/" + groupData.id + "/update"}
-          className="m-2 btn btn-primary"
-        >
-          Modificar grupo
-        </Link>
-        <Link
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#confirm"
-          className="m-2 btn btn-danger"
-        >
-          Excluir grupo
-        </Link>
-      </div>
-      <Modal
-        id="confirm"
-        danger
-        body="Deseja excluir o grupo?"
-        onClick={removeData}
-      />
+
+      {(role==="g") && 
+        <>
+          <div className="d-flex flex-column">
+            <Link
+              to={"/groups/" + groupData.id + "/update"}
+              className="m-2 btn btn-primary"
+            >
+              Modificar grupo
+            </Link>
+            <Link
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#confirm"
+              className="m-2 btn btn-danger"
+            >
+              Excluir grupo
+            </Link>
+          </div>
+          <Modal
+            id="confirm"
+            danger
+            body="Deseja excluir o grupo?"
+            onClick={removeData}
+          />
+        </>
+      }
     </>
   );
 }

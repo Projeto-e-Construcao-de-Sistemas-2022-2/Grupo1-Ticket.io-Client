@@ -53,6 +53,7 @@ function Sidebar() {
   //{value: "morph", text: "Morph"},
 
   const { user } = useContext(AuthGoogleContext);
+  let role = user.localData.role
 
   useEffect(() => {
     if (clicked) setClicked(false);
@@ -134,52 +135,56 @@ function Sidebar() {
                 </span>
               </NavLink>
             </li>
-            <li
-              className={
-                "nav-item my-1 mx-0 mx-lg-0" + (mdExpanded ? "" : " mx-sm-auto")
-              }
-            >
-              <NavLink
-                to="groups/new"
-                end
-                className="feather-props nav-link"
-                onClick={() => {
-                  setClicked(true);
-                }}
+            {(role==="g") &&
+              <li
+                className={
+                  "nav-item my-1 mx-0 mx-lg-0" + (mdExpanded ? "" : " mx-sm-auto")
+                }
               >
-                <GroupAddTwoTone />
-                <span
-                  className={
-                    "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
-                  }
+                <NavLink
+                  to="groups/new"
+                  end
+                  className="feather-props nav-link"
+                  onClick={() => {
+                    setClicked(true);
+                  }}
                 >
-                  Cadastrar Gp. Solucion.
-                </span>
-              </NavLink>
-            </li>
-            <li
-              className={
-                "nav-item my-1 mx-0 mx-lg-0" + (mdExpanded ? "" : " mx-sm-auto")
-              }
-            >
-              <NavLink
-                to="issues/new"
-                end
-                className="feather-props nav-link"
-                onClick={() => {
-                  setClicked(true);
-                }}
+                  <GroupAddTwoTone />
+                  <span
+                    className={
+                      "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
+                    }
+                  >
+                    Cadastrar Gp. Solucion.
+                  </span>
+                </NavLink>
+              </li>
+            }
+            {(role==="g" || role==="q") &&
+              <li
+                className={
+                  "nav-item my-1 mx-0 mx-lg-0" + (mdExpanded ? "" : " mx-sm-auto")
+                }
               >
-                <PostAddTwoTone />
-                <span
-                  className={
-                    "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
-                  }
+                <NavLink
+                  to="issues/new"
+                  end
+                  className="feather-props nav-link"
+                  onClick={() => {
+                    setClicked(true);
+                  }}
                 >
-                  Cadastrar Problema
-                </span>
-              </NavLink>
-            </li>
+                  <PostAddTwoTone />
+                  <span
+                    className={
+                      "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
+                    }
+                  >
+                    Cadastrar Problema
+                  </span>
+                </NavLink>
+              </li>
+            }
             <li
               className={
                 "nav-item my-1 mx-0 mx-lg-0" + (mdExpanded ? "" : " mx-sm-auto")

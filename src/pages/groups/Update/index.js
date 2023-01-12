@@ -1,6 +1,7 @@
 import Select from "react-select";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+import { AuthGoogleContext } from "../../../contexts/authGoogle";
 import Modal from "../../../components/Modal";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate, Link } from "react-router-dom";
@@ -23,6 +24,8 @@ function UpdateGroup() {
   const [groupMembers, setGroupMembers] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useContext(AuthGoogleContext);
+  let role = user.localData.role
   let getData = async () => {
     let promises = [];
     promises.push(axios.get(process.env.REACT_APP_SERVER + "/group/" + id));
@@ -76,7 +79,12 @@ function UpdateGroup() {
     patchData(e);
   };
 
-  return (
+  if (role!=="g") return (
+    <p className="text-danger pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 ">
+      Apenas o Gestor tem permissão para cadastrar, modificar ou excluir um Grupo Solucionador
+    </p>
+  )
+  else return (
     <>
       <div className="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
         <h1 className="h2">Atualizar grupo solucionador</h1>

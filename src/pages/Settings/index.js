@@ -12,6 +12,7 @@ function Settings() {
     formState: { errors }
   } = useForm();
   const { user, signed, signOut } = useContext(AuthGoogleContext);
+  let role = user.localData.role
   const [data, setData] = useState([]);
   const [dataOutput, setDataOutput] = useState({})
   const [reportSelectData, setReportSelectData] = useState({});
@@ -78,11 +79,13 @@ function Settings() {
       </div>
 
       <form>
+        
         <p className="mt-3 mb-2 text-center fs-3 text-uppercase user-select-none">
           Relatório Gerencial
         </p>
         
-        <div className="w-100 row d-flex flex-row mx-auto">
+        { (role==="g") &&
+          <div className="w-100 row d-flex flex-row mx-auto">
           <div className="col-12 col-sm-9 px-0">
             <label htmlFor="report" className="fs-6">
               Período do envio automático
@@ -100,6 +103,7 @@ function Settings() {
             </button>
           </div>
         </div>
+        }
         <p className="text-center my-2">
           <Link
               to={null}
@@ -244,6 +248,17 @@ function Settings() {
           })}
         />
         <p className="text-warning">{errors?.cep?.message}</p>
+        <label htmlFor="email" className="fs-6">
+          Cargo
+        </label>
+        <input
+          type="role"
+          readOnly
+          name="role"
+          id="role"
+          className="form-control bg-dark text-light mb-3"
+          value={(role==="g" ? "Gestor" : (role==="q" ? "Analista de Qualidade" : (role==="d" ? "Desenvolvedor" : "----")))}
+        />
 
         <div className="w-100 d-flex flex-column">
           <button type="button" onClick={handleSubmit(onProfileSubmit)} className="w-50 mx-auto my-3 btn btn-primary">

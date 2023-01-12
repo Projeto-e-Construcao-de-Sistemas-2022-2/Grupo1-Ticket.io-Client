@@ -12,6 +12,7 @@ function Complete() {
     formState: { errors }
   } = useForm();
   const { user, signed } = useContext(AuthGoogleContext);
+  let role = user.localData.role
   const navigate = useNavigate();
 
   if (!signed || !user) return <Navigate to="/login" />;
@@ -138,6 +139,17 @@ function Complete() {
                     message: "Apenas caracteres numéricos"
                   }
                 })}
+              />
+              <label htmlFor="email" className="fs-6">
+                Cargo
+              </label>
+              <input
+                type="role"
+                readOnly
+                name="role"
+                id="role"
+                className="form-control bg-dark text-light mb-3"
+                value={(role==="g" ? "Gestor" : (role==="q" ? "Analista de Qualidade" : (role==="d" ? "Desenvolvedor" : "----")))}
               />
               <p className="text-warning">{errors?.cep?.message}</p>
               <button type="submit" className="mb-5 btn btn-outline-light">

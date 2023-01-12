@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { AuthGoogleContext } from "../../../contexts/authGoogle";
 import axios from "axios";
 import Modal from "../../../components/Modal";
 import DatePicker, { CalendarContainer } from "react-datepicker";
@@ -24,6 +25,8 @@ export default function UpdateIssue() {
   const [result, setResult] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useContext(AuthGoogleContext);
+  let role = user.localData.role
   //let options = []
   let getData = async () => {
     let promises = [];
@@ -95,7 +98,12 @@ export default function UpdateIssue() {
     patchData(e);
   };
 
-  return (
+  if (role!=="q" && role!=="g") return (
+    <p className="text-danger pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 ">
+      Apenas um Analista de Qualidade ou o Gestor tem permissão para cadastrar, modificar ou excluir um Problema
+    </p>
+  )
+  else return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
         <h1 className="h2">Atualizar Ticket de Problema</h1>

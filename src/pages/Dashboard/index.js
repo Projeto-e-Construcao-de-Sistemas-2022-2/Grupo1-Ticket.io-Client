@@ -7,9 +7,13 @@ import {
   ListAltTwoTone,
   HomeRepairServiceTwoTone
 } from "@mui/icons-material";
+import { useContext } from "react";
+import { AuthGoogleContext } from "../../contexts/authGoogle";
 import "./style.css";
 
 function Dashboard() {
+  const { user } = useContext(AuthGoogleContext);
+  let role = user.localData.role
   const themeColorException =
     localStorage.getItem("theme") === "quartz" ||
     localStorage.getItem("theme") === "vapor" ||
@@ -21,18 +25,20 @@ function Dashboard() {
         <h1 className="h2">Dashboard</h1>
       </div>
       <div className="row btn-row mb-4">
-        <Link
-          to="groups/new"
-          className={
-            "btn btn-square mb-2 btn-" +
-            (themeColorException ? "outline-secondary" : "outline-primary")
-          }
-          color="secondary"
-        >
-          <GroupAddTwoTone />
-          <p>Cadastrar Grupo Solucionador</p>
-        </Link>
-        <Link
+        {(role==="g") &&
+          <Link
+            to="groups/new"
+            className={
+              "btn btn-square mb-2 btn-" +
+              (themeColorException ? "outline-secondary" : "outline-primary")
+            }
+            color="secondary"
+          >
+            <GroupAddTwoTone />
+            <p>Cadastrar Grupo Solucionador</p>
+          </Link>
+        }
+        {(role==="g" || role==="q") && <Link
           to="issues/new"
           className={
             "btn btn-square mb-2 btn-" +
@@ -41,7 +47,7 @@ function Dashboard() {
         >
           <PostAddTwoTone />
           <p>Cadastrar Ticket de Problema</p>
-        </Link>
+        </Link>}
         <Link
           to="settings"
           className={

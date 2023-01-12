@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+import { AuthGoogleContext } from "../../../contexts/authGoogle";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Modal from "../../../components/Modal";
@@ -9,6 +10,8 @@ export default function Issue() {
   const [tpData, setTpData] = useState([]);
   const [tpGroupName, setTpGroupName] = useState([]);
   const navigate = useNavigate();
+  const { user } = useContext(AuthGoogleContext);
+  let role = user.localData.role
 
   let getData = async () => {
     await axios
@@ -91,37 +94,42 @@ export default function Issue() {
       <h3>Data de criação:</h3>
       <p>{new Date(tpData.created_at).toLocaleString()}</p>
 
-      <div className="d-flex flex-column">
-        <Link
-          to={"/issues/" + tpData.id + "/update"}
-          className="m-2 btn btn-primary"
-        >
-          Modificar TP
-        </Link>
-        <Link
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#confirm"
-          className="m-2 btn btn-danger"
-        >
-          Excluir TP
-        </Link>
-      </div>
-      <Modal
-        id="confirm"
-        danger
-        body={
-          <>
-            <p>
-              Isso EXCLUIRÁ o problema, para encerrar use a opção
-              "MODIFICAR/ENCERRAR PROBLEMA".
-            </p>
-            <p>Ainda deseja prosseguir com a exclusão?</p>
-          </>
-        }
-        onClick={removeData}
-        confirm="Excluir"
-      />
+
+      {(role==="q" || role==="g") &&
+        <>
+          <div className="d-flex flex-column">
+            <Link
+              to={"/issues/" + tpData.id + "/update"}
+              className="m-2 btn btn-primary"
+            >
+              Modificar TP
+            </Link>
+            <Link
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#confirm"
+              className="m-2 btn btn-danger"
+            >
+              Excluir TP
+            </Link>
+          </div>
+          <Modal
+            id="confirm"
+            danger
+            body={
+              <>
+                <p>
+                  Isso EXCLUIRÁ o problema, para encerrar use a opção
+                  "MODIFICAR/ENCERRAR PROBLEMA".
+                </p>
+                <p>Ainda deseja prosseguir com a exclusão?</p>
+              </>
+            }
+            onClick={removeData}
+            confirm="Excluir"
+          />
+        </>
+      }
     </>
   );
 }

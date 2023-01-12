@@ -1,6 +1,7 @@
 import Select from "react-select";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+import { AuthGoogleContext } from "../../../contexts/authGoogle";
 import Modal from "../../../components/Modal";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +21,8 @@ function NewGroup() {
   const [emptySelect, setEmptySelect] = useState(true);
   const [result, setResult] = useState("");
   const navigate = useNavigate();
+  const { user } = useContext(AuthGoogleContext);
+  let role = user.localData.role
   let getData = async () => {
     let res = await axios.get(process.env.REACT_APP_SERVER + "/user");
     setData(res.data.results);
@@ -44,7 +47,8 @@ function NewGroup() {
           value: op.id,
           label: (op.name ? op.name : "sem nome") + " {" + op.email + "}"
         };
-        setOptions((options) => [...options, item]);
+        if (op.role=="d")
+          setOptions((options) => [...options, item]);
       });
     }
   }, [data]);
@@ -61,7 +65,12 @@ function NewGroup() {
     postData(e);
   };
 
-  return (
+  if (role!=="g") return (
+    <p className="text-danger pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 ">
+      Apenas o Gestor tem permissão para cadastrar, modificar ou excluir um Grupo Solucionador
+    </p>
+  )
+  else return (
     <>
       <div className="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
         <h1 className="h2">Novo grupo solucionador</h1>
