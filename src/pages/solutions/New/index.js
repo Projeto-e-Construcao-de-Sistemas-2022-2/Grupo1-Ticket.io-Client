@@ -24,8 +24,8 @@ function NewIssue() {
   const generateLero = async() => {
     await axios.get(process.env.REACT_APP_SERVER + "/lero")
     .then((res)=>{
-      setValue("title", res.data.solTitleLero),
-      setValue("details", res.data.solDetailsLero)
+      setValue("title", res.data.solutionTitleLero),
+      setValue("details", res.data.solutionDescLeroPlus)
     })
   }
 
@@ -119,7 +119,7 @@ function NewIssue() {
             Enviar
           </button>
         </div>
-        <Link onClick={generateLero} style={{ visibility: "hidden" }} className="link text-center">Gerador de Lero Lero</Link>
+        <Link onClick={generateLero} className="link text-center">Gerador de Lero Lero</Link>
         <pre style={{ visibility: "hidden" }}>{result}</pre>
         <Modal id="confirm" body="Deseja criar a solução?" submit />
       </form>

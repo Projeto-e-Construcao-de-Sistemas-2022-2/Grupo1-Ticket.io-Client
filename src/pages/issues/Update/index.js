@@ -29,6 +29,7 @@ export default function UpdateIssue() {
   const [rootCauseData, setRootCauseData] = useState([]);
   const [rootCauseOptions, setRootCauseOptions] = useState([]);
   const [select, setSelect] = useState(null);
+  const [file, setFile] = useState(null)
   const [rootCauseSelect, setRootCauseSelect] = useState("");
   const [result, setResult] = useState("");
   const { id } = useParams();
@@ -109,9 +110,12 @@ export default function UpdateIssue() {
   const onSubmit = (e) => {
     if (select) e.group = select.value;
     e.prevConclusion = selectDate;
+    if (!issueData.root_cause) 
+      e.file = file
     if (rootCauseSelect!==""){ 
       e.rootCause = rootCauseSelect.value;
       e.conclusion = (new Date).toISOString()
+      delete e.file
     }
     let o = Object.fromEntries(Object.entries(e).filter(([_, v]) => v !== ""));
     setResult(
@@ -265,23 +269,30 @@ export default function UpdateIssue() {
               classNamePrefix="select"
             />
           </div>
-          <div className="mt-3 col-md-6">
+          <div disabled className="mt-3 col-md-6">
             <label htmlFor="form-file" className="mb-0 col-form-label">
-              Relatório:
+              {"Relatório" + (issueData.root_cause ? " (não pode ser mais alterado)" : ": ")} 
             </label>
-            <input className="form-control" required type="file" id="form-file" />
+            <input disabled={issueData.root_cause} className="form-control"  required type="file" id="form-file" onChange={(e)=>{
+              if (e.target.files[0].type === "application/pdf") 
+                setFile(e.target.files[0])
+              else 
+                setFile("")
+            }} />
           </div>
           <Link to="/solutions/new" className="link text-center">Cadastrar uma Causa-Raiz</Link>
-          <div className="my-4 col-12 d-flex justify-content-center">
+          <div className="mt-4 col-12 d-flex justify-content-center">
             <button
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#confirm"
               className="mx-3 px-5 btn btn-primary"
+              disabled={!file || file===""}
             >
               Encerrar TP
             </button>
           </div>
+          {file==="" && <p className="text-center text-danger">apenas arquivos: PDF</p>}
         </>}
         <pre style={{ visibility: "hidden" }}>{result}</pre>
         <Modal id="confirm" body="Deseja criar TP?" submit />
