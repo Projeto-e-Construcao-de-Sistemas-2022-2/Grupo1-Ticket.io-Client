@@ -61,8 +61,12 @@ function UpdateGroup() {
       getData();
     } else {
       data.map(function (op) {
-        var item = { value: op.id, label: op.name + " {" + op.email + "}" };
-        setOptions((options) => [...options, item]);
+        var item = {
+          value: op.id,
+          label: (op.name ? op.name : "sem nome") + " {" + op.email + "}"
+        };
+        if (op.role=="d")
+          setOptions((options) => [...options, item]);
       });
     }
   }, [data]);
