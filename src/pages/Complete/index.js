@@ -12,7 +12,7 @@ function Complete() {
     formState: { errors }
   } = useForm();
   const { user, signed } = useContext(AuthGoogleContext);
-  let role = user.localData.role
+  let role = "d"
   const navigate = useNavigate();
 
   if (!signed || !user) return <Navigate to="/login" />;
@@ -22,6 +22,9 @@ function Complete() {
       .post(process.env.REACT_APP_SERVER + "/user", data)
       .then(function (res) {
         user.authorized = true;
+        user.localData = {}
+        user.localData.role = "d"
+        user.displayName = data.name
         localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
         navigate("/");
       })
@@ -65,7 +68,7 @@ function Complete() {
                   "form-control mb-3" +
                   (user.displayName ? " bg-dark text-light" : "")
                 }
-                value={user.displayName}
+                defaultValue={user.displayName ? user.displayName : ""}
                 {...register("name", {
                   required: "Campo obrigatório",
                   minLength: {
@@ -116,30 +119,6 @@ function Complete() {
                 })}
               />
               <p className="text-warning">{errors?.cpf?.message}</p>
-              <label htmlFor="cep" className="fs-6">
-                CEP
-              </label>
-              <input
-                type="number"
-                name="cep"
-                id="cep"
-                className="form-control mb-3"
-                {...register("cep", {
-                  required: "Campo obrigatório",
-                  minLength: {
-                    value: 8,
-                    message: "8 digitos!"
-                  },
-                  maxLength: {
-                    value: 8,
-                    message: "8 digitos!"
-                  },
-                  pattern: {
-                    value: /^[0-9]+$/i,
-                    message: "Apenas caracteres numéricos"
-                  }
-                })}
-              />
               <label htmlFor="email" className="fs-6">
                 Cargo
               </label>
@@ -151,7 +130,7 @@ function Complete() {
                 className="form-control bg-dark text-light mb-3"
                 value={(role==="g" ? "Gestor" : (role==="q" ? "Analista de Qualidade" : (role==="d" ? "Desenvolvedor" : "----")))}
               />
-              <p className="text-warning">{errors?.cep?.message}</p>
+              
               <button type="submit" className="mb-5 btn btn-outline-light">
                 Finalizar
               </button>

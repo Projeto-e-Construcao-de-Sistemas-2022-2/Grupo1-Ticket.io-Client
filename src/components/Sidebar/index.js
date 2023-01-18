@@ -55,7 +55,8 @@ function Sidebar() {
 
   const { user } = useContext(AuthGoogleContext);
   let role
-  if (user) role = user.localData.role
+  if (user && user.localData) role = user.localData.role
+  else role = "d"
 
   useEffect(() => {
     if (clicked) setClicked(false);

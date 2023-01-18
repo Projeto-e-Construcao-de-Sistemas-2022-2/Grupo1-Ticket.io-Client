@@ -14,7 +14,7 @@ import "./style.css";
 
 function Dashboard() {
   const { user } = useContext(AuthGoogleContext);
-  let role = user.localData.role
+  let role = user.localData ? user.localData.role : "d"
   const themeColorException =
     localStorage.getItem("theme") === "quartz" ||
     localStorage.getItem("theme") === "vapor" ||

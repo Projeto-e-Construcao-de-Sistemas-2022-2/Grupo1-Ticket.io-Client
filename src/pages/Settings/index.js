@@ -45,7 +45,6 @@ function Settings() {
       {}
     );
     if (o.name === user.displayName) delete o.name
-    console.log(o)
     setDataOutput({})
     if (Object.keys(o).length === 0 && o.constructor === Object) return;
     patchData(o);
@@ -223,31 +222,6 @@ function Settings() {
           })}
         />
         <p className="text-warning">{errors?.cpf?.message}</p>
-        <label htmlFor="cep" className="fs-6">
-          CEP
-        </label>
-        <input
-          type="number"
-          name="cep"
-          id="cep"
-          className="form-control mb-3"
-          defaultValue={data.cep}
-          {...register("cep", {
-            minLength: {
-              value: 8,
-              message: "8 digitos!"
-            },
-            maxLength: {
-              value: 8,
-              message: "8 digitos!"
-            },
-            pattern: {
-              value: /^[0-9]+$/i,
-              message: "Apenas caracteres numéricos"
-            }
-          })}
-        />
-        <p className="text-warning">{errors?.cep?.message}</p>
         <label htmlFor="email" className="fs-6">
           Cargo
         </label>
