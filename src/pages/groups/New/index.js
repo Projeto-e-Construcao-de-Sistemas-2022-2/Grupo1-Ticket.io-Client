@@ -47,7 +47,7 @@ function NewGroup() {
           value: op.id,
           label: (op.name ? op.name : "sem nome") + " {" + op.email + "}"
         };
-        if (op.role=="d")
+        if (op.role==="d")
           setOptions((options) => [...options, item]);
       });
     }
