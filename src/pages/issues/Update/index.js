@@ -280,7 +280,7 @@ export default function UpdateIssue() {
                 setFile("")
             }} />
           </div>
-          <Link to="/solutions/new" className="link text-center">Cadastrar uma Causa-Raiz</Link>
+          <Link to="/solutions/new" target="_blank" rel="noopener noreferrer" className="mt-3 link text-center">Cadastrar uma Causa-Raiz</Link>
           <div className="mt-4 col-12 d-flex justify-content-center">
             <button
               type="button"

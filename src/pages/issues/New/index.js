@@ -38,8 +38,8 @@ function NewIssue() {
   const generateLero = async() => {
     await axios.get(process.env.REACT_APP_SERVER + "/lero")
     .then((res)=>{
-      setValue("title", res.data.tpTitleLero),
-      setValue("desc", res.data.tpDescLero)
+      setValue("title", res.data.issueTitleLero),
+      setValue("desc", res.data.issueDescLero)
     })
     
   }
