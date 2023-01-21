@@ -129,7 +129,7 @@ export default function UpdateIssue() {
  return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">{role==="d"? "Encerrar": "Atualizar"} Ticket de Problema</h1>
+        <h1 className="h2">{role==="d"? "Encerrar": "Modificar"} Ticket de Problema</h1>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -241,7 +241,7 @@ export default function UpdateIssue() {
               data-bs-target="#confirm"
               className="mx-3 px-5 btn btn-primary"
             >
-              Atualizar TP
+              Atualizar Problema
             </button>
           </div>:
         <>
@@ -289,13 +289,13 @@ export default function UpdateIssue() {
               className="mx-3 px-5 btn btn-primary"
               disabled={!file || file===""}
             >
-              Encerrar TP
+              Encerrar Problema
             </button>
           </div>
           {file==="" && <p className="text-center text-danger">apenas arquivos: PDF</p>}
         </>}
         <pre style={{ visibility: "hidden" }}>{result}</pre>
-        <Modal id="confirm" body="Deseja criar TP?" submit />
+        <Modal id="confirm" body="Deseja modificar o Ticket de Problema?" submit />
       </form>
     </>
   );

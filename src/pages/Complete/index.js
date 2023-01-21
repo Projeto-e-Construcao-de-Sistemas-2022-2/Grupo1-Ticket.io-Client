@@ -72,12 +72,12 @@ function Complete() {
                 {...register("name", {
                   required: "Campo obrigatório",
                   minLength: {
-                    value: 8,
-                    message: "Pelo menos 8 caracteres"
+                    value: 3,
+                    message: "Nome muito curto"
                   },
                   maxLength: {
-                    value: 40,
-                    message: "No máximo 40 caracteres, se possível abrevie"
+                    value: 255,
+                    message: "Nome muito longo"
                   }
                 })}
               />
@@ -95,7 +95,7 @@ function Complete() {
                 {...register("email")}
               />
               <label htmlFor="cpf" className="fs-6">
-                CPF
+                CPF (apenas números)
               </label>
               <input
                 type="number"

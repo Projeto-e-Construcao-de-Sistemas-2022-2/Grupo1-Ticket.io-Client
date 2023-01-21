@@ -278,7 +278,7 @@ function Sidebar() {
                     "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                   }
                 >
-                  Soluções Anteriores
+                  Listar Soluções
                 </span>
               </NavLink>
             </li>

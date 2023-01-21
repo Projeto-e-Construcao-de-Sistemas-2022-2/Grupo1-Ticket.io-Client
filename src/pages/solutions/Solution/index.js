@@ -39,7 +39,7 @@ export default function Solution() {
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Detalhes da Solução </h1>
+        <h1 className="h2">Detalhes da Solução de Causas-Raiz</h1>
       </div>
       <h3>Solução:</h3>
       <p style={{ marginBottom: "0" }}>
@@ -61,7 +61,7 @@ export default function Solution() {
               to={"/solutions/" + solutionData.id + "/update"}
               className="m-2 btn btn-primary"
             >
-              Modificar Solução
+              Modificar Solução de Causa-Raiz
             </Link>
             <Link
               type="button"
@@ -69,7 +69,7 @@ export default function Solution() {
               data-bs-target="#confirm"
               className="m-2 btn btn-danger"
             >
-              Excluir Solução
+              Excluir Solução de Causa-Raiz
             </Link>
           </div>
           <Modal
@@ -77,7 +77,7 @@ export default function Solution() {
             danger
             body={
               <>
-                <p>Deseja excluir essa solução? Todos os problemas associados a ela serão marcados como "Em aberto".</p>
+                <p>Deseja excluir essa Solução de Causa-Raiz? Todos os problemas associados a ela serão marcados como "Em aberto".</p>
               </>
             }
             onClick={removeData}

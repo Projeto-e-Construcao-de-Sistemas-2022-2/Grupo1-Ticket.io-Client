@@ -236,7 +236,7 @@ function Settings() {
 
         <div className="w-100 d-flex flex-column">
           <button type="button" onClick={handleSubmit(onProfileSubmit)} className="w-50 mx-auto my-3 btn btn-primary">
-            Confirmar alterações
+            Confirmar Alterações
           </button>
           <p className={"my-2 text-center text-"+ (dataOutput.success?"success":"warning")}>{dataOutput.message}</p>
           <Link

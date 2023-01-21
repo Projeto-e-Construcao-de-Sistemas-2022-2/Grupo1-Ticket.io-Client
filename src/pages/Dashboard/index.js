@@ -60,16 +60,6 @@ function Dashboard() {
           <p>Cadastrar Solução de Causa Raiz</p>
         </Link>}
         <Link
-          to="settings"
-          className={
-            "btn btn-square mb-2 btn-" +
-            (themeColorException ? "outline-secondary" : "outline-primary")
-          }
-        >
-          <AssessmentTwoTone />
-          <p>Relatório Gerencial</p>
-        </Link>
-        <Link
           to="groups"
           className={
             "btn btn-square mb-2 btn-" +
@@ -87,7 +77,7 @@ function Dashboard() {
           }
         >
           <ListAltTwoTone />
-          <p>Listar Problemas</p>
+          <p>Listar Tickets de Problema</p>
         </Link>
         <Link
           to="solutions"
@@ -97,7 +87,17 @@ function Dashboard() {
           }
         >
           <HomeRepairServiceTwoTone />
-          <p>Listar Soluções Anteriores</p>
+          <p>Listar Soluções de Causa-Raiz</p>
+        </Link>
+        <Link
+          to="settings"
+          className={
+            "btn btn-square mb-2 btn-" +
+            (themeColorException ? "outline-secondary" : "outline-primary")
+          }
+        >
+          <AssessmentTwoTone />
+          <p>Relatório Gerencial</p>
         </Link>
       </div>
       <p>~~exibir um gráfico~~</p>

@@ -121,7 +121,7 @@ function NewIssue() {
         </div>
         <Link onClick={generateLero} className="link text-center">Gerador de Lero Lero</Link>
         <pre style={{ visibility: "hidden" }}>{result}</pre>
-        <Modal id="confirm" body="Deseja criar a solução?" submit />
+        <Modal id="confirm" body="Deseja cadastrar a Solução de Causa-Raiz?" submit />
       </form>
     </>
   );

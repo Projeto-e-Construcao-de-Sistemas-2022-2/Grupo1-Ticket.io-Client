@@ -120,7 +120,7 @@ function NewIssue() {
   else return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Criar Ticket de Problema</h1>
+        <h1 className="h2">Cadastrar Ticket de Problema</h1>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -217,7 +217,7 @@ function NewIssue() {
         </div>
         <Link onClick={generateLero} className="link text-center">Gerador de Lero Lero</Link>
         <pre style={{ visibility: "hidden" }}>{result}</pre>
-        <Modal id="confirm" body="Deseja modificar o TP?" submit />
+        <Modal id="confirm" body="Deseja cadastrar o Ticket de Problema?" submit />
       </form>
     </>
   );

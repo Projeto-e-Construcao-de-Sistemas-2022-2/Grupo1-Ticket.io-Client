@@ -49,7 +49,7 @@ export default function Issue() {
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Detalhes do TP </h1>
+        <h1 className="h2">Detalhes do Ticket de Problema</h1>
       </div>
       <h3>Ticket de Problema:</h3>
       <p style={{ marginBottom: "0" }}>
@@ -115,7 +115,7 @@ export default function Issue() {
               to={"/issues/" + tpData.id + "/update"}
               className="m-2 btn btn-primary"
             >
-              Modificar TP
+              Modificar Ticket de Problema
             </Link>
             <Link
               type="button"
@@ -123,7 +123,7 @@ export default function Issue() {
               data-bs-target="#confirm"
               className="m-2 btn btn-danger"
             >
-              Excluir TP
+              Excluir Ticket de Problema
             </Link>
           </div>
           <Modal
@@ -132,10 +132,10 @@ export default function Issue() {
             body={
               <>
                 <p>
-                  Isso EXCLUIRÁ o problema, para encerrar use a opção
-                  "MODIFICAR/ENCERRAR PROBLEMA".
+                  <strong>Aviso:</strong> Isso EXCLUIRÁ o problema, para encerrar use a opção
+                  "ENCERRAR PROBLEMA".
                 </p>
-                <p>Ainda deseja prosseguir com a exclusão?</p>
+                <p>Ainda deseja prosseguir com a exclusão do Ticket de Problema?</p>
               </>
             }
             onClick={removeData}

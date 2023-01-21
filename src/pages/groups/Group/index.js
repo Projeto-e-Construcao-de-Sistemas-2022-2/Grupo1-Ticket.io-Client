@@ -39,7 +39,7 @@ function Group() {
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Detalhes do Grupo </h1>
+        <h1 className="h2">Detalhes do Grupo Solucionador</h1>
       </div>
       <h3>Nome do grupo:</h3>
       <p>{groupData.name}</p>
@@ -61,7 +61,7 @@ function Group() {
               to={"/groups/" + groupData.id + "/update"}
               className="m-2 btn btn-primary"
             >
-              Modificar grupo
+              Modificar Grupo Solucionador
             </Link>
             <Link
               type="button"
@@ -69,13 +69,13 @@ function Group() {
               data-bs-target="#confirm"
               className="m-2 btn btn-danger"
             >
-              Excluir grupo
+              Excluir Grupo Solucionador
             </Link>
           </div>
           <Modal
             id="confirm"
             danger
-            body="Deseja excluir o grupo?"
+            body="Deseja excluir o Grupo Solucionador?"
             onClick={removeData}
           />
         </>

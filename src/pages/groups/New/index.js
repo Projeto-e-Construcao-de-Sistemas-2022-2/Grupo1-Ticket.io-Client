@@ -73,7 +73,7 @@ function NewGroup() {
   else return (
     <>
       <div className="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Novo grupo solucionador</h1>
+        <h1 className="h2">Cadastrar Grupo Solucionador</h1>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="name" className="mb-0 col-form-label">
@@ -90,10 +90,10 @@ function NewGroup() {
               value: 6,
               message: "Mínimo de 6 caracteres"
             },
-            pattern: {
-              value: /^[a-zA-Z0-9 ]+$/i,
-              message: "Apenas caracteres alfanuméricos"
-            }
+            maxLength: {
+              value: 255,
+              message: "Estourou o máximo de caracteres, cê tá bem?"
+            },
           })}
         />
         <p className="text-warning">{errors?.name?.message}</p>
@@ -130,7 +130,7 @@ function NewGroup() {
           </button>
         </div>
         <pre style={{ visibility: "hidden" }}>{result}</pre>
-        <Modal id="confirm" body="Deseja criar o grupo?" submit />
+        <Modal id="confirm" body="Deseja cadastrar o Grupo Solucionador?" submit />
       </form>
     </>
   );

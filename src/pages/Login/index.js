@@ -236,13 +236,9 @@ function Login() {
                       value: 6,
                       message: "Senha deve possuir ao menos 6 caracteres"
                     },
-                    maxLength: {
-                      value: 32,
-                      message: "no máximo 32 caracteres"
-                    },
                     pattern: {
-                      value: /^(?=.*[0-9]).{6,}$/,
-                      message: "Senha deve possuir ao menos um número"
+                      value: /^(?=.*?\d)(?=.*?[a-zA-Z])[a-zA-Z\d]+$/,
+                      message: "Senha deve possuir ao menos um número e uma letra"
                     }
                   })}
                 />

@@ -13,14 +13,13 @@ function UpdateGroup() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm();
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
-  const [select, setSelect] = useState(null);
   const [emptySelect, setEmptySelect] = useState(false);
   const [result, setResult] = useState("");
-  const [groupData, setGroupData] = useState([]);
   const [groupMembers, setGroupMembers] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ function UpdateGroup() {
     promises.push(axios.get(process.env.REACT_APP_SERVER + "/user"));
 
     await Promise.all(promises).then((res) => {
-      setGroupData(res[0].data.results);
+      setValue("name", res[0].data.results.name)
       res[1].data.results.map(function (op) {
         setGroupMembers((groupMembers) => [
           ...groupMembers,
@@ -91,7 +90,7 @@ function UpdateGroup() {
   else return (
     <>
       <div className="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Atualizar grupo solucionador</h1>
+        <h1 className="h2">Modificar Grupo Solucionador</h1>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="name" className="mb-0 col-form-label">
@@ -102,16 +101,17 @@ function UpdateGroup() {
           name="name"
           type="text"
           className="mb-3 form-control"
-          defaultValue={groupData.name}
           {...register("name", {
+            required: "Campo obrigatório",
             minLength: {
               value: 6,
               message: "Mínimo de 6 caracteres"
             },
-            pattern: {
-              value: /^[a-zA-Z0-9 ]+$/i,
-              message: "Apenas caracteres alfanuméricos"
-            }
+            maxLength: {
+              value: 255,
+              message: "Estourou o máximo de caracteres, cê tá bem?"
+            },
+            
           })}
         />
         <p className="text-warning">{errors?.name?.message}</p>
@@ -134,9 +134,6 @@ function UpdateGroup() {
           classNamePrefix="select"
         />
         <div className="my-4 col-12 d-flex justify-content-center">
-          {/* <button type="reset" className="mx-2 px-5 btn btn-warning">
-            Limpar
-          </button> */}
           <button
             type="button"
             data-bs-toggle="modal"
@@ -148,7 +145,7 @@ function UpdateGroup() {
           </button>
         </div>
         <pre style={{ visibility: "hidden" }}>{result}</pre>
-        <Modal id="confirm" body="Deseja modificar o grupo?" submit />
+        <Modal id="confirm" body="Deseja modificar o Grupo Solucionador?" submit />
       </form>
     </>
   );
