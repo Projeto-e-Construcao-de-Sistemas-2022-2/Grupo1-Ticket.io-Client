@@ -53,9 +53,10 @@ export default function Issue() {
       </div>
       <h3>Ticket de Problema:</h3>
       <p style={{ marginBottom: "0" }}>
-        <strong>{tpData.title}</strong> &lt;{id}&gt;
+        <strong>{tpData.title}</strong> [TP{id.slice(0,9)}...]
       </p>
       <pre style={{whiteSpace: "pre-line"}}>{tpData.desc}</pre>
+      <p>{tpData.incidents_count} incidente{(tpData.incidents_count>1) && <>s</>}</p>
       <h3>Grupo atribuido:</h3>
       {tpGroupName && (
         <>
@@ -78,20 +79,26 @@ export default function Issue() {
         {(!tpData.conclusion && (new Date(tpData.prev_conclusion) <= new Date())) && " (atrasado)"}
       </p>
       <h3>Conclusão:</h3>
-      <p>
-        {tpData.conclusion && (
-          <>
+      {tpData.conclusion && (
+        <>
+          <p>
             {new Date(tpData.conclusion).toLocaleDateString("pt-br", {
               weekday: "long",
               day: "numeric",
               month: "long",
               year: "numeric"
             })}
-            &nbsp;
-            <Link to={"/solutions/"+tpData.root_cause}>(Causa-Raiz)</Link>
-          </>
-        )}
-      </p>
+            &nbsp;|&nbsp;
+            <Link to={"/solutions/"+tpData.root_cause}>Causa-Raiz [CR{tpData.root_cause.slice(0,9)}...]</Link>
+          </p>  
+          <p>
+            <a target="_blank" rel="noopener noreferrer" href={"http://drive.google.com/open?id="+tpData.drive_doc_id}>
+              Visualizar o Relatório
+            </a>
+          </p>
+        </>
+      )}
+      
       {!tpData.conclusion && <p>Em andamento</p>}
       <h3>Data de criação:</h3>
       <p>{new Date(tpData.created_at).toLocaleString()}</p>
@@ -100,7 +107,7 @@ export default function Issue() {
         <>
           <Link
             to={"/issues/" + tpData.id + "/update?finish=true"}
-            className="d-flex flex-column m-2 btn btn-primary"
+            className={"d-flex flex-column m-2 btn btn-primary" + (tpData.conclusion ? " disabled" : "")}
           >
             <span>
             <DoneOutlineTwoTone /> Encerrar TP
@@ -113,7 +120,7 @@ export default function Issue() {
           <div className="d-flex flex-column">
             <Link
               to={"/issues/" + tpData.id + "/update"}
-              className="m-2 btn btn-primary"
+              className={"m-2 btn btn-primary" + (tpData.conclusion ? " disabled" : "")}
             >
               Modificar Ticket de Problema
             </Link>
@@ -125,6 +132,7 @@ export default function Issue() {
             >
               Excluir Ticket de Problema
             </Link>
+            <Link to="/issues/new" className="m-2 text-center">Cadastrar Reincidente / Reabrir o Problema</Link>
           </div>
           <Modal
             id="confirm"

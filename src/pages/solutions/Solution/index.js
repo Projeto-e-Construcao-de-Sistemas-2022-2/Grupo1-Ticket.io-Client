@@ -43,7 +43,7 @@ export default function Solution() {
       </div>
       <h3>Solução:</h3>
       <p style={{ marginBottom: "0" }}>
-        <strong>{solutionData.title}</strong> &lt;{id}&gt;
+        <strong>{solutionData.title}</strong> [CR{id.slice(0,9)}...]
       </p>
       <h3 className="mt-3">Detalhes:</h3>
       <pre style={{whiteSpace: "pre-line"}}>{solutionData.details}</pre>
@@ -51,7 +51,7 @@ export default function Solution() {
       <p>{new Date(solutionData.created_at).toLocaleString()}</p>
       <h3>Problemas associados:</h3>
       <p>
-        {solutionIssues.map((solId)=><span key={solId}><Link to={`/issues/${solId}`}>{`[${solId.slice(0,9)}...]`}</Link> </span>)}
+        {solutionIssues.map((solId)=><span key={solId}><Link to={`/issues/${solId}`}>{`[TP${solId.slice(0,9)}...]`}</Link> </span>)}
         {solutionIssues.length<=0 && <>Nenhum</>}
       </p>
       {(role==="d" || role==="g") &&

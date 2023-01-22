@@ -34,14 +34,15 @@ export default function Solutions() {
     {
       id: "title",
       name: "Solução",
-      selector: (row) => `{${row.id.slice(0,9)}...} ${row.title}`,
+      selector: (row) => `[CR${row.id.slice(0,9)}...] ${row.title.slice(0,65)}`+(row.title.length>65?"...":""),
       sortable: true
     },
     {
       id: "created_at",
       name: "Data de criação",
       selector: (row) => new Date(row.created_at).toLocaleString("pt-BR"),
-      sortable: true
+      sortable: true,
+      width: "180px"
     }
   ];
 

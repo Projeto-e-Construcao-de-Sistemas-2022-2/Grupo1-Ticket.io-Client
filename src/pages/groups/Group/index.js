@@ -9,6 +9,7 @@ function Group() {
   const { id } = useParams();
   const [groupData, setGroupData] = useState([]);
   const [groupMembers, setGroupMembers] = useState([]);
+  const [groupIssues, setGroupIssues] = useState([]);
   const { user } = useContext(AuthGoogleContext);
   let role = user.localData.role
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ function Group() {
       process.env.REACT_APP_SERVER + "/group/" + id + "?members=true"
     );
     setGroupMembers(groupMembersRes.data.results);
+    let groupIssuesRes = await axios.get(
+      process.env.REACT_APP_SERVER + "/group/" + id + "?issues=true"
+    );
+    setGroupIssues(groupIssuesRes.data.results);
   };
 
   let removeData = async () => {
@@ -46,11 +51,17 @@ function Group() {
       <h3>Data de criação:</h3>
       <p>{new Date(groupData.created_at).toLocaleString("pt-BR")}</p>
       <h3>Membros:</h3>
-      <div className="mb-4">
+      <div>
         {groupMembers.map((member) => (
           <p key={member.id}>
             {member.name} ({member.email})
           </p>
+        ))}
+      </div>
+      <h3>Problemas associados:</h3>
+      <div className="mb-4">
+        {groupIssues.map((issId) => (
+          <span key={issId}><Link to={`/issues/${issId}`}>{`[tp${issId.slice(0,9)}...]`}</Link> </span>
         ))}
       </div>
 

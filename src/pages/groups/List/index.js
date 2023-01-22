@@ -61,19 +61,21 @@ function Groups() {
       id: "name",
       name: "Nome",
       selector: (row) => row.name,
-      sortable: true
+      sortable: true,
     },
     {
       id: "members",
       name: "Membros",
       selector: (row) => row.membercount,
-      sortable: true
+      sortable: true,
+      width: "130px"
     },
     {
       id: "created_at",
       name: "Data de criação",
       selector: (row) => new Date(row.created_at).toLocaleString("pt-BR"),
-      sortable: true
+      sortable: true,
+      width: "200px"
     }
   ];
 

@@ -21,18 +21,24 @@ function NewIssue() {
   const [selectDate, setSelectDate] = useState(
     new Date(new Date().setHours(0, 0, 0, 0))
   );
+  const [issuesData, setIssuesData] = useState([]);
+  const [issuesOptions, setIssuesOptions] = useState([]);
+  const [issueSelect, setIssueSelect] = useState(null);
   const [groupsData, setGroupsData] = useState([]);
-  const [groupsOptions, setOptions] = useState([]);
-  const [select, setSelect] = useState(null);
+  const [groupsOptions, setGroupsOptions] = useState([]);
+  const [groupSelect, setGroupSelect] = useState(null);
   const [emptySelect, setEmptySelect] = useState(true);
+  const [reincident, setReincident] = useState(false);
   const [result, setResult] = useState("");
   const navigate = useNavigate();
   const { user } = useContext(AuthGoogleContext);
   let role = user.localData.role
   //let options = []
   let getGroupsData = async () => {
-    let res = await axios.get(process.env.REACT_APP_SERVER + "/group");
-    setGroupsData(res.data.results);
+    let resGroups = await axios.get(process.env.REACT_APP_SERVER + "/group");
+    setGroupsData(resGroups.data.results);
+    let resIssues = await axios.get(process.env.REACT_APP_SERVER + "/issue");
+    setIssuesData(resIssues.data.results);
   };
 
   const generateLero = async() => {
@@ -54,10 +60,18 @@ function NewIssue() {
           value: op.id,
           label: op.name
         };
-        return setOptions((options) => [...options, item]);
+        return setGroupsOptions((options) => [...options, item]);
+      });
+      issuesData.map((op) => {
+        //options.push({value: op.email, label: op.name.first + " " + op.name.last + " {" + op.email + "}"})
+        var item = {
+          value: op.id,
+          label: `[TP${op.id.slice(0,9)}...]` + (op.root_cause?` (FINALIZADO) `:` (EM ANDAMENTO) `) + `${op.title}`
+        };
+        return setIssuesOptions((options) => [...options, item]);
       });
     }
-  }, [groupsData]);
+  }, [groupsData, issuesData]);
 
   const calendarContainer = ({ className, children }) => {
     return (
@@ -76,8 +90,8 @@ function NewIssue() {
     );
   };
 
-  const handleSelect = async(e) => {
-    setSelect(e);
+  const handleGroupSelect = async(e) => {
+    setGroupSelect(e);
     setEmptySelect(false);
     await axios.get(process.env.REACT_APP_SERVER + "/group/" + e.value + "?members=true")
     .then((resMembers)=>{
@@ -88,6 +102,10 @@ function NewIssue() {
       })
       setValue("devContact", str)
     })
+  };
+
+  const handleIssueSelect = async(e) => {
+    setIssueSelect(e);
   };
 
   const postData = async (data) => {
@@ -101,8 +119,19 @@ function NewIssue() {
       });
   };
 
+  const patchReincidentData = async (data) => {
+    await axios
+      .patch(process.env.REACT_APP_SERVER + "/issue/" + data.issue + "?reincident=true", data)
+      .then(function (res) {
+        navigate("/issues/" + data.issue);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const onSubmit = (e) => {
-    e.group = select.value;
+    e.group = groupSelect.value;
     e.prevConclusion = selectDate;
     setResult(
       "POST:\n" +
@@ -110,6 +139,16 @@ function NewIssue() {
         "\n(redirecionar para página Listar Problemas qnd o backend confirmar)"
     );
     postData(e);
+  };
+
+  const onReincidentSubmit = (e) => {
+    e.issue = issueSelect.value;
+    setResult(
+      "PATCH:\n" +
+        JSON.stringify(e, null, 2) +
+        "\n(redirecionar para página do Problema qnd o backend confirmar)"
+    );
+    patchReincidentData(e);
   };
 
   if (role!=="q" && role!=="g") return (
@@ -120,105 +159,178 @@ function NewIssue() {
   else return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pt-md-4 pt-xl-5 pb-2 mb-3 border-bottom">
-        <h1 className="h2">Cadastrar Ticket de Problema</h1>
+        <h1 className="h2">{!reincident ? "Cadastrar Ticket de Problema": "Cadastrar Reincidente"}</h1>
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="row d-flex justify-content-center"
-      >
-        <div className="col-md-6">
-          <label htmlFor="title" className="mb-0 col-form-label">
-            Título do problema:{" "}
-          </label>
-          <input
-            id="title"
-            type="text"
-            className="mb-3 form-control"
-            {...register("title", {
-              required: "Campo obrigatório",
-              minLength: {
-                value: 3,
-                message: "Mínimo de 3 caracteres"
+      <p className="form-check">
+        <input type="checkbox" name="reincident" id="reincident" checked={reincident} onChange={()=>setReincident(!reincident)} className="form-check-input" />
+        <label className="form-check-label" htmlFor="reincident">Problema reincidente?</label>
+      </p>
+      {!reincident ? 
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="row d-flex justify-content-center"
+        >
+          <div className="col-md-6">
+            <label htmlFor="title" className="mb-0 col-form-label">
+              Título do problema:{" "}
+            </label>
+            <input
+              id="title"
+              type="text"
+              className="mb-3 form-control"
+              {...register("title", {
+                required: "Campo obrigatório",
+                minLength: {
+                  value: 3,
+                  message: "Mínimo de 3 caracteres"
+                }
+              })}
+            />
+            <p className="text-warning">{errors?.title?.message}</p>
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="react-select-2-input" className="mb-0 col-form-label">
+              Grupo atribuído:{" "}
+            </label>
+            <Select
+              value={groupSelect}
+              onChange={(e) => {
+                handleGroupSelect(e);
+              }}
+              defaultValue={[]}
+              name="group"
+              isLoading={groupsData.length <= 0}
+              options={groupsOptions}
+              placeholder={
+                groupsData.length <= 0 ? "Carregando..." : "Selecionar"
               }
-            })}
-          />
-          <p className="text-warning">{errors?.title?.message}</p>
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="react-select-2-input" className="mb-0 col-form-label">
-            Grupo atribuído:{" "}
-          </label>
-          <Select
-            value={select}
-            onChange={(e) => {
-              handleSelect(e);
-            }}
-            defaultValue={[]}
-            name="group"
-            isLoading={groupsData.length <= 0}
-            options={groupsOptions}
-            placeholder={
-              groupsData.length <= 0 ? "Carregando..." : "Selecionar"
-            }
-            className="form-text basic-multi-select text-dark mb-3"
-            classNamePrefix="select"
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="description" className="mb-0 col-form-label">
-            Descrição do problema:{" "}
-          </label>
-          <textarea
-            rows={5}
-            id="description"
-            className="mb-3 form-control"
-            {...register("desc", { required: "Campo obrigatório" })}
-          />
-          <p className="text-warning">{errors?.desc?.message}</p>
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="developer-contact" className="mb-0 col-form-label">
-            Contato do desenvolvedor:{" "}
-          </label>
-          <textarea
-            rows={5}
-            id="developer-contact"
-            className="mb-3 form-control"
-            {...register("devContact", { required: "Campo obrigatório" })}
-          />
-          <p className="text-warning">{errors?.devContact?.message}</p>
-        </div>
-        <div className="col-6">
-          <label htmlFor="date" className="mb-0 col-form-label">
-            Previsão de conclusão:{" "}
-          </label>
-          <DatePicker
-            id="date"
-            calendarContainer={calendarContainer}
-            className="form-control"
-            dateFormat="dd/MM/yyyy"
-            selected={selectDate}
-            onChange={(date) => setSelectDate(date)}
-          />
-        </div>
-        <div className="my-4 col-12 d-flex justify-content-center">
-          <button type="reset" className="mx-2 px-5 btn btn-warning" onClick={()=>setSelect(null)}>
-            Limpar
-          </button>
-          <button
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#confirm"
-            className="mx-3 px-5 btn btn-primary"
-            disabled={emptySelect}
-          >
-            Enviar
-          </button>
-        </div>
-        <Link onClick={generateLero} className="link text-center">Gerador de Lero Lero</Link>
-        <pre style={{ visibility: "hidden" }}>{result}</pre>
-        <Modal id="confirm" body="Deseja cadastrar o Ticket de Problema?" submit />
-      </form>
+              className="form-text basic-multi-select text-dark mb-3"
+              classNamePrefix="select"
+            />
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="description" className="mb-0 col-form-label">
+              Descrição do problema:{" "}
+            </label>
+            <textarea
+              rows={5}
+              id="description"
+              className="mb-3 form-control"
+              {...register("desc", { required: "Campo obrigatório" })}
+            />
+            <p className="text-warning">{errors?.desc?.message}</p>
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="developer-contact" className="mb-0 col-form-label">
+              Contato do desenvolvedor:{" "}
+            </label>
+            <textarea
+              rows={5}
+              id="developer-contact"
+              className="mb-3 form-control"
+              {...register("devContact", { required: "Campo obrigatório" })}
+            />
+            <p className="text-warning">{errors?.devContact?.message}</p>
+          </div>
+          <div className="col-6">
+            <label htmlFor="date" className="mb-0 col-form-label">
+              Previsão de conclusão:{" "}
+            </label>
+            <DatePicker
+              id="date"
+              calendarContainer={calendarContainer}
+              className="form-control"
+              dateFormat="dd/MM/yyyy"
+              selected={selectDate}
+              onChange={(date) => setSelectDate(date)}
+            />
+          </div>
+          <div className="col-6">
+            <label htmlFor="incidentsCount" className="mb-0 col-form-label">
+              Número de incidentes:
+            </label>
+            <input 
+              type="number" 
+              name="incidentsCount" 
+              id="incidentsCount" 
+              min={1}
+              defaultValue={1}
+              className="mb-3 form-control" 
+              {...register("incidentsCount", { required: "Campo obrigatório", min: {value: 1, message: "Valor inválido"} })} 
+            />
+            <p className="text-warning">{errors?.incidentsCount?.message}</p>
+          </div>
+          <div className="my-4 col-12 d-flex justify-content-center">
+            <button type="reset" className="mx-2 px-5 btn btn-warning" onClick={()=>setGroupSelect(null)}>
+              Limpar
+            </button>
+            <button
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#confirm"
+              className="mx-3 px-5 btn btn-primary"
+              disabled={emptySelect}
+            >
+              Enviar
+            </button>
+          </div>
+          <Link onClick={generateLero} className="link text-center">Gerador de Lero Lero</Link>
+          <pre style={{ visibility: "hidden" }}>{result}</pre>
+          <Modal id="confirm" body="Deseja cadastrar o Ticket de Problema?" submit />
+        </form>:
+        <form
+          onSubmit={handleSubmit(onReincidentSubmit)}
+          className="row d-flex justify-content-center"
+        >
+          <div className="col-8 col-md-9 col-lg-10">
+            <label htmlFor="react-select-2-input" className="mb-0 col-form-label">
+              Problema associado:
+            </label>
+            <Select
+              value={issueSelect}
+              onChange={(e) => {
+                handleIssueSelect(e);
+              }}
+              defaultValue={[]}
+              name="issue"
+              isLoading={issuesData.length <= 0}
+              options={issuesOptions}
+              placeholder={
+                groupsData.length <= 0 ? "Carregando..." : "Selecionar"
+              }
+              className="form-text basic-multi-select text-dark mb-3"
+              classNamePrefix="select"
+            />
+          </div>
+          <div className="col-4 col-md-3 col-lg-2">
+            <label htmlFor="incidentsCount" className="mb-0 col-form-label">
+              Reincidentes:
+            </label>
+            <input 
+              type="number" 
+              name="incidentsCount" 
+              id="incidentsCount" 
+              min={1}
+              defaultValue={1}
+              className="mb-3 mt-1 form-control" 
+              {...register("incidentsCount", { required: "Campo obrigatório", min: {value: 1, message: "Valor inválido"} })} 
+            />
+            <p className="text-warning">{errors?.incidentsCount?.message}</p>
+          </div>
+          <div className="col-12">
+            <a
+              className="d-flex flex-column btn btn-primary"
+              href={null}
+              data-bs-toggle="modal"
+              data-bs-target="#confirm"
+            >
+              Cadastrar Reincidência / Reabrir Problema
+            </a>
+          </div>
+          
+          <Modal id="confirm" body="Deseja cadastrar reincidência nesse problema? Caso o problema esteja finalizado será reaberto." submit />
+        </form>
+      }
     </>
   );
 }

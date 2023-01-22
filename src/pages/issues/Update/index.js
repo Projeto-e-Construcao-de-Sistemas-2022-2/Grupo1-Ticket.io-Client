@@ -63,7 +63,7 @@ export default function UpdateIssue() {
       rootCauseData.map((op) => {
         var item = {
           value: op.id,
-          label: `{${op.id.slice(0,9)}...} ${op.title}` 
+          label: `[CR${op.id.slice(0,9)}...] ${op.title}` 
         };
         return setRootCauseOptions((options) => [...options, item]);
       });
@@ -96,15 +96,40 @@ export default function UpdateIssue() {
     setRootCauseSelect(e);
   };
 
-  const patchData = async (data) => {
-    await axios
+  const patchData = async (data, f) => {
+    if (f) {
+      let formData = new FormData()
+      formData.append("file",f)
+      axios
+        .patch(process.env.REACT_APP_SERVER + "/issue/" + id + "?upload=true", formData,{
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .catch(function (error) {
+          console.log(error);
+          return (error)
+        })
+        .then(()=>{
+          axios
+            .patch(process.env.REACT_APP_SERVER + "/issue/" + id, data)
+            .then(function (res) {
+              navigate("/issues/" + id);
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
+        })
+    } else {
+      await axios
       .patch(process.env.REACT_APP_SERVER + "/issue/" + id, data)
       .then(function (res) {
         navigate("/issues/" + id);
       })
       .catch(function (error) {
         console.log(error);
-      });
+      })
+    }
   };
 
   const onSubmit = (e) => {
@@ -123,7 +148,7 @@ export default function UpdateIssue() {
         JSON.stringify(o, null, 2) +
         "\n(redirecionar para página Listar Problemas qnd o backend confirmar)"
     );
-    patchData(e);
+    patchData(e, file);
   };
 
  return (
@@ -151,10 +176,6 @@ export default function UpdateIssue() {
                     value: 6,
                     message: "Mínimo de 6 caracteres"
                   },
-                  pattern: {
-                    value: /^[a-zA-Z0-9 ]+$/i,
-                    message: "Apenas caracteres alfanuméricos"
-                  }
                 })}
               />
               <p className="text-warning">{errors?.title?.message}</p>
@@ -225,11 +246,13 @@ export default function UpdateIssue() {
           </>
         }
         {(role === "d" || role === "g") && <>
-            <div className="mt-3 col-6 d-flex align-items-center form-check">
-              <input className="ms-1 form-check-input" disabled={issueData.root_cause} type="checkbox" value="" checked={finished === "true"} onChange={()=>setFinished(finished === "true" ? "false" : "true")} id="finished" />
-              <label htmlFor="finished" disabled={issueData.root_cause} className="mx-1 form-check-label">
-                Finalizado
-              </label>
+            <div className="mt-3 col-6 d-flex align-items-center">
+              <div className="  form-check">
+                <input className="form-check-input" disabled={issueData.root_cause} type="checkbox" value="" checked={finished === "true"} onChange={()=>setFinished(finished === "true" ? "false" : "true")} id="finished" />
+                <label htmlFor="finished" disabled={issueData.root_cause} className="form-check-label">
+                  Problema encerrado
+                </label>
+              </div>
             </div>
           </>
         }
