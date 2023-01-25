@@ -10,6 +10,7 @@ export default function Issue() {
   const { id } = useParams();
   const [tpData, setTpData] = useState([]);
   const [tpGroupName, setTpGroupName] = useState([]);
+  const [ following, setFollowing ] = useState(null);
   const navigate = useNavigate();
   const { user } = useContext(AuthGoogleContext);
   let role = user.localData.role
@@ -32,6 +33,12 @@ export default function Issue() {
             );
           });
       });
+    await axios.get(`${process.env.REACT_APP_RTDB_ENDPOINT}/following/${user.localData.id}.json`)
+      .then(async (res)=>{
+        let data = res.data
+        if (data.find(i => i==id)) setFollowing(true)
+        else setFollowing(false)
+      })
   };
 
   let removeData = async () => {
@@ -56,7 +63,31 @@ export default function Issue() {
         <strong>{tpData.title}</strong> [TP{id.slice(0,9)}...]
       </p>
       <pre style={{whiteSpace: "pre-line"}}>{tpData.desc}</pre>
-      <p>{tpData.incidents_count} incidente{(tpData.incidents_count>1) && <>s</>}</p>
+      <p>
+        {tpData.incidents_count} incidente{(tpData.incidents_count>1) && <>s</>}
+        <span> | </span>
+        <Link to={null} onClick={async ()=>{
+          return await axios.get(`${process.env.REACT_APP_RTDB_ENDPOINT}/following/${user.localData.id}.json`)
+          .then(async (res)=>{
+            let data = res.data
+            if (!data || !data.find(i => i==id)){
+              if (!data) data = []
+              data.push(id)
+              console.log(data)
+              setFollowing(true)
+            }else {
+              data = data.filter(function(e) { return e !== id })
+              console.log(data)
+              setFollowing(false)
+            }
+            await axios.put(`${process.env.REACT_APP_RTDB_ENDPOINT}/following/${user.localData.id}.json`,Object.assign({},data))
+                .catch((error)=>{return console.log(error)})
+          })
+        }}>
+          {following ? "parar de acompanhar " : "acompanhar "}problema
+        </Link>
+        
+      </p>
       <h3>Grupo atribuido:</h3>
       {tpGroupName && (
         <>
@@ -88,13 +119,13 @@ export default function Issue() {
               month: "long",
               year: "numeric"
             })}
-            &nbsp;|&nbsp;
-            <Link to={"/solutions/"+tpData.root_cause}>Causa-Raiz [CR{tpData.root_cause.slice(0,9)}...]</Link>
           </p>  
           <p>
             <a target="_blank" rel="noopener noreferrer" href={"http://drive.google.com/open?id="+tpData.drive_doc_id}>
               Visualizar o Relatório
             </a>
+            <span> | </span>
+            <Link to={"/solutions/"+tpData.root_cause}>Causa-Raiz [CR{tpData.root_cause.slice(0,9)}...]</Link>
           </p>
         </>
       )}

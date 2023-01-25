@@ -122,14 +122,14 @@ function Settings() {
           <Link
               to={null}
               onClick={async ()=>{
-                await axios.get('https://ticket-io-auth-default-rtdb.firebaseio.com/email.json')
+                await axios.get(process.env.REACT_APP_RTDB_ENDPOINT + '/email.json')
                 .then(async (res) => {
                   const email = res.data
                   if (!email.find(i => i==user.email))
                     email.push(user.email)
                   else 
                     return setReportOutput({success: false, message: "E-mail já está cadastrado"})
-                  await axios.patch('https://ticket-io-auth-default-rtdb.firebaseio.com/.json',{email: email})
+                  await axios.patch(process.env.REACT_APP_RTDB_ENDPOINT + '/.json',{email: email})
                   .then(setReportOutput({success: true, message: "E-mail cadastrado"}))
                   .catch((error)=>setReportOutput({success: false, message: "Ocorreu um erro"}))
                 })

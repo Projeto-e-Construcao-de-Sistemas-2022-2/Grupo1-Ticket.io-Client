@@ -61,7 +61,7 @@ function Group() {
       <h3>Problemas associados:</h3>
       <div className="mb-4">
         {groupIssues.map((issId) => (
-          <span key={issId}><Link to={`/issues/${issId}`}>{`[tp${issId.slice(0,9)}...]`}</Link> </span>
+          <span key={issId}><Link to={`/issues/${issId}`}>{`[TP${issId.slice(0,9)}...]`}</Link> </span>
         ))}
       </div>
 

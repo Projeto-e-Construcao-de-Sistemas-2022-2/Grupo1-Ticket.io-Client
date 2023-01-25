@@ -22,6 +22,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### ⚙️ Pré-requisito
 - [Node.js](https://nodejs.org/pt-br/) instalado na máquina
 - [Ticket.io-Server](https://github.com/Projeto-e-Construcao-de-Sistemas-2022-2/Grupo3-Ticket.io-Server) rodando
+- Autenticação e Realtime DataBase do [Google Firebase](http://firebase.google.com/) 
 
 ### 🔽 Instalação
 Na pasta do projeto, execute o comando:
@@ -37,6 +38,17 @@ Coloque a variável de ambiente da url do backend (localhost:5000 por padrão) n
 
 ```
 REACT_APP_SERVER=http://localhost:5000
+
+# Credenciais do Firebase
+REACT_APP_FIREBASE_API_KEY=
+REACT_APP_FIREBASE_AUTH_DOMAIN=
+REACT_APP_FIREBASE_PROJECT_ID=
+REACT_APP_FIREBASE_STORAGE_BUCKET=
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
+REACT_APP_FIREBASE_APP_ID=
+
+# Endpoint do Realtime Database com todas as permissões
+REACT_APP_RTDB_ENDPOINT=
 ```
 
 O projeto estará pronto para ser compilado.

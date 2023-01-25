@@ -133,6 +133,7 @@ function NewIssue() {
   const onSubmit = (e) => {
     e.group = groupSelect.value;
     e.prevConclusion = selectDate;
+    e.author = user.localData.id;
     setResult(
       "POST:\n" +
         JSON.stringify(e, null, 2) +
