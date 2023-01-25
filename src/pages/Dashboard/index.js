@@ -223,6 +223,7 @@ function Dashboard() {
                   {userReports?.userOngoingTp?.map((iss) => (
                     (iss.group_id === group.id) &&
                       <Link 
+                       key={iss.tp_id}
                        to={`/issues/${iss.tp_id}`}
                        className={(new Date(iss .tp_prev_conclusion)-new Date()<0) ? "text-danger":""}
                       >
