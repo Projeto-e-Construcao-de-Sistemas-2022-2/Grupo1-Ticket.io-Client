@@ -190,7 +190,7 @@ function Dashboard() {
               {followList?.map((issId) => (
                 <Fragment key={issId}><Link to={`/issues/${issId}`}>{`[TP${issId.slice(0,9)}...]`}</Link> </Fragment>
               ))}
-              {!followList && "N/A"}
+              {(followList?.length<=0) && "N/A"}
             </p>
           </div>
         }
@@ -208,7 +208,7 @@ function Dashboard() {
                   </Link> 
                 </span>
               ))}
-              {!userReports?.userCreatedOngoingTp && "N/A"}
+              {(userReports?.userCreatedOngoingTp?.length<=0) && <>N/A</>}
             </p>
           </div>
         }
@@ -233,6 +233,7 @@ function Dashboard() {
                 </p>
               ))}
             </div>
+            {(userReports?.userGroups?.length<=0) && <>N/A</>}
           </div>
         }
         
