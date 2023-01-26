@@ -119,7 +119,7 @@ function Dashboard() {
               color="secondary"
             >
               <GroupAddTwoTone />
-              <p>Cadastrar Grupo Solucionador</p>
+              <p>Novo Grupo Solucionador</p>
             </Link>
           }
           {(role==="g" || role==="q") && <Link
@@ -130,7 +130,7 @@ function Dashboard() {
             }
           >
             <PostAddTwoTone />
-            <p>Cadastrar Ticket de Problema</p>
+            <p>Novo Ticket de Problema</p>
           </Link>}
           {(role==="d") && <Link
             to="solutions/new"
@@ -140,7 +140,7 @@ function Dashboard() {
             }
           >
             <AddTaskTwoTone />
-            <p>Cadastrar Solução de Causa Raiz</p>
+            <p>Nova Solução de Causa Raiz</p>
           </Link>}
           <Link
             to="groups"

@@ -80,7 +80,7 @@
   }
   .btn-square p {
     font-size: smaller;
-    margin: 3px;
+    margin: 2px;
     overflow: hidden;
     text-overflow: ellipsis;
   }

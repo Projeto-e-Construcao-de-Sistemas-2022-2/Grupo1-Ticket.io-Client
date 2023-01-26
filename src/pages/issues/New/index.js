@@ -54,8 +54,8 @@ function NewIssue() {
     if (groupsData.length <= 0) {
       getGroupsData();
     } else {
+      setGroupsOptions([])
       groupsData.map((op) => {
-        //options.push({value: op.email, label: op.name.first + " " + op.name.last + " {" + op.email + "}"})
         var item = {
           value: op.id,
           label: op.name
@@ -63,7 +63,6 @@ function NewIssue() {
         return setGroupsOptions((options) => [...options, item]);
       });
       issuesData.map((op) => {
-        //options.push({value: op.email, label: op.name.first + " " + op.name.last + " {" + op.email + "}"})
         var item = {
           value: op.id,
           label: `[TP${op.id.slice(0,9)}...]` + (op.root_cause?` (FINALIZADO) `:` (EM ANDAMENTO) `) + `${op.title}`

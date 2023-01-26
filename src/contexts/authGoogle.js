@@ -124,9 +124,10 @@ export const AuthGoogleProvider = ({ children }) => {
   async function passwordReset(email) {
     return await sendPasswordResetEmail(auth, email)
       .then((result) => {
-        alert("E-mail enviado");
-        navigate(0);
-        return "200";
+        //alert("E-mail enviado");
+        //navigate(0);
+        //return "200";
+        return "E-mail enviado! Altere sua senha através do link enviado e faça login com a nova senha"
       })
       .catch((error) => {
         if (error.code === "auth/user-not-found")

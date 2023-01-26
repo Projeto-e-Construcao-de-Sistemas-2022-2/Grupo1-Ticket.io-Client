@@ -134,7 +134,7 @@ function Sidebar() {
                     "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                   }
                 >
-                  Dashboard
+                  <small>Dashboard</small>
                 </span>
               </NavLink>
             </li>
@@ -158,7 +158,7 @@ function Sidebar() {
                       "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                     }
                   >
-                    Cadastrar Gp. Solucion.
+                    <small>Novo Grupo Solucionador</small>
                   </span>
                 </NavLink>
               </li>
@@ -183,7 +183,7 @@ function Sidebar() {
                       "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                     }
                   >
-                    Cadastrar Problema
+                    <small>Novo Ticket de Problema</small>
                   </span>
                 </NavLink>
               </li>
@@ -208,7 +208,7 @@ function Sidebar() {
                       "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                     }
                   >
-                    Cadastrar Causa-Raiz
+                    <small>Nova Solução de Causa...</small>
                   </span>
                 </NavLink>
               </li>
@@ -232,7 +232,7 @@ function Sidebar() {
                     "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                   }
                 >
-                  Listar G. Solucionadores
+                  <small>Listar Grupos Soluciona...</small>
                 </span>
               </NavLink>
             </li>
@@ -255,7 +255,7 @@ function Sidebar() {
                     "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                   }
                 >
-                  Listar Problemas
+                  <small>Listar Tickets de Proble...</small>
                 </span>
               </NavLink>
             </li>
@@ -278,7 +278,7 @@ function Sidebar() {
                     "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                   }
                 >
-                  Listar Soluções
+                  <small>Listar Soluções de Caus...</small>
                 </span>
               </NavLink>
             </li>
@@ -305,7 +305,7 @@ function Sidebar() {
                     "px-2 d-lg-inline" + (mdExpanded ? "" : " d-sm-none")
                   }
                 >
-                  Configurações
+                  <small>Configurações</small>
                 </span>
               </NavLink>
             </li>

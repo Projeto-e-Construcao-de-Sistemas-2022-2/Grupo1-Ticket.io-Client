@@ -137,23 +137,13 @@ function Settings() {
               }}
               className="link"
             >
-              Cadastrar meu e-mail para receber automáticamente
+              Cadastrar meu e-mail para receber automaticamente
           </Link>
         </p>
-        <p className={"mb-4 text-center text-"+ (reportOutput.success?"success":"warning")}>{reportOutput.message}</p>
-        <Modal
-          id="confirm"
-          title="Excluir cadastro"
-          body={
-            <>
-              {"Tem certeza que deseja excluir o seu cadastro?"}
-              <br />
-              {"Irá remover seu nome de todos os grupos associados. "}
-            </>
-          }
-          danger
-          onClick={removeData}
-        />
+        <div role="alert" hidden={!reportOutput.message} className={"mb-4 text-center alert-dismissible alert alert-"+ (reportOutput.success?"success":"warning")}>
+          <div>{reportOutput.message}</div>
+          <button type="button" class="btn-close" onClick={()=>setReportOutput({})}></button>
+        </div>
       </form>
 
       <form onSubmit={handleSubmit(onProfileSubmit)}>

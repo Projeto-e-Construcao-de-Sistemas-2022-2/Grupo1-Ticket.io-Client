@@ -90,7 +90,10 @@ function Login() {
                 <button type="submit" className="mb-4 btn btn-outline-light">
                   Enviar redefinição de senha
                 </button>
-                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                <p role="alert" hidden={!errorMessage} className={"text-center alert-dismissible alert alert-"+(errorMessage.slice(0,2)==="E-" ? "success":"warning ")}>
+                  <span>{errorMessage}</span>
+                  <button type="button" class="btn-close" onClick={()=>setErrorMessage("")}></button>
+                </p>
                 <Link
                   to="#"
                   className="my-1 p-1 w-100 link-light text-center"
@@ -160,14 +163,25 @@ function Login() {
                   id="password"
                   className="form-control mb-1"
                   {...register("password", {
-                    required: "Campo vazio"
+                    required: "Campo vazio",
+                    minLength: {
+                      value: 1,
+                      message: "Campo vazio"
+                    },
+                    pattern: {
+                      value: /^(.*?)/,
+                      message: "Campo vazio"
+                    }
                   })}
                 />
                 <p className="text-warning">{errors?.password?.message}</p>
                 <button type="submit" className="mb-2 btn btn-outline-light">
                   Login
                 </button>
-                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                <p role="alert" hidden={!errorMessage} className="text-center alert-dismissible alert alert-warning">
+                  <span>{errorMessage}</span>
+                  <button type="button" class="btn-close" onClick={()=>setErrorMessage("")}></button>
+                </p>
                 <Link
                   to="#"
                   className="my-1 p-1 w-100 link-light text-center"
@@ -264,7 +278,10 @@ function Login() {
                 <button type="submit" className="mb-2 btn btn-outline-light">
                   Cadastrar-se
                 </button>
-                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                <p role="alert" hidden={!errorMessage} className="text-center alert-dismissible alert alert-warning">
+                  <span>{errorMessage}</span>
+                  <button type="button" class="btn-close" onClick={()=>setErrorMessage("")}></button>
+                </p>
                 <Link
                   to="#"
                   className="my-1 p-1 w-100 link-light text-center"
