@@ -73,21 +73,24 @@ export default function Issues() {
     {
       id: "conclusion",
       name: "Conclusão",
-      selector: (row) => row.conclusion ? new Date(row.conclusion).toLocaleDateString("pt-BR") : "Em andamento",
+      selector: (row) => new Date(row.conclusion).toISOString(),
+      format: (row) => row.conclusion ? new Date(row.conclusion).toLocaleDateString("pt-BR") : "Em andamento",
       sortable: true,
       width: "180px"
     },
     {
       id: "prev_conclusion",
       name: "Previsão de conclusão",
-      selector: (row) => new Date(row.prev_conclusion).toLocaleDateString("pt-BR"),
+      selector: (row) => new Date(row.prev_conclusion).toISOString(),
+      format: (row) => new Date(row.prev_conclusion).toLocaleDateString("pt-BR"),
       sortable: true,
       width: "180px"
     },
     {
       id: "created_at",
       name: "Data de criação",
-      selector: (row) => new Date(row.created_at).toLocaleString("pt-BR"),
+      selector: (row) => new Date(row.created_at).toISOString(),
+      format: (row) => new Date(row.created_at).toLocaleString("pt-BR"),
       sortable: true,
       width: "200px"
     }

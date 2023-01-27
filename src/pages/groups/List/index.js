@@ -73,7 +73,8 @@ function Groups() {
     {
       id: "created_at",
       name: "Data de criação",
-      selector: (row) => new Date(row.created_at).toLocaleString("pt-BR"),
+      selector: (row) => new Date(row.created_at).toISOString(),
+      format: (row) => new Date(row.created_at).toLocaleString("pt-BR"),
       sortable: true,
       width: "200px"
     }
